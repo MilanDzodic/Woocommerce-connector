@@ -4,6 +4,7 @@ GEM
     app_bridge (3.0.0)
       rb_sys (~> 0.9.110)
     app_bridge (3.0.0-arm64-darwin)
+    app_bridge (3.0.0-x86_64-linux)
     ast (2.4.3)
     benchmark-malloc (0.2.0)
     benchmark-perf (0.6.0)
@@ -76,6 +77,7 @@ GEM
 PLATFORMS
   arm64-darwin-23
   ruby
+  x86_64-linux
 
 DEPENDENCIES
   app_bridge (= 3.0.0)

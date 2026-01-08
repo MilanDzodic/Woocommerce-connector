@@ -1,0 +1,91 @@
+require 'spec_helper'
+
+RSpec.describe 'actions.retrieve_customer_by_id' do
+  let(:mock_server) { instance_variable_get(:@mock_server) }
+
+  # Ladda WASM-appen (matchar din build)
+  let(:app) do
+    AppBridge::App.new('target/wasm32-wasip2/release/github_connector.wasm')
+  end
+
+  # Skapa Connection-objektet med nödvändiga headers för AppBridge
+  let(:connection) do
+    AppBridge::Connection.new(
+      'test-id',
+      'WooCommerce Connection',
+      {
+        'base_url' => 'http://localhost:8080',
+        'consumer_key' => 'ck_test',
+        'consumer_secret' => 'cs_test',
+        'headers' => { 'Content-Type' => 'application/json' }
+      }.to_json
+    )
+  end
+
+  let(:tester) do
+    TestHelper::ActionTester.new(app, connection)
+  end
+
+  before do
+    mock_server.clear_endpoints
+  end
+
+  it 'hämtar kund med korrekt id och returnerar rätt data från Rust' do
+    # 1. Förbered mock-svar
+    mock_server.mock_endpoint(:get, '/customers/123', {
+      'id' => 123,
+      'email' => 'customer@example.com',
+      'first_name' => 'Anders',
+      'last_name' => 'Andersson'
+    })
+
+    # 2. Kör actionen
+    response = tester.execute_action('retrieve_customer_by_id', { 'customerId' => 123 })
+
+    # 3. Parsa resultatet med den korrekta metoden :serialized_output
+    data = JSON.parse(response.serialized_output)
+
+    # Snygg utskrift för bekräftelse
+    puts "\n" + "="*40
+    puts "DATA FRÅN RUST-ACTION (WASM):"
+    pp data
+    puts "="*40
+
+    # 4. Verifiera resultatet
+    expect(data['id']).to eq(123)
+    expect(data['email']).to eq('customer@example.com')
+    expect(data['first_name']).to eq('Anders')
+  end
+
+  it 'accepterar både sträng och siffra som customerId i Rust-logiken' do
+    # Testa med sträng
+    mock_server.mock_endpoint(:get, '/customers/456', { 'id' => 456 })
+    res_str = tester.execute_action('retrieve_customer_by_id', { 'customerId' => '456' })
+    expect(JSON.parse(res_str.serialized_output)['id']).to eq(456)
+
+    # Testa med siffra
+    mock_server.mock_endpoint(:get, '/customers/789', { 'id' => 789 })
+    res_int = tester.execute_action('retrieve_customer_by_id', { 'customerId' => 789 })
+    expect(JSON.parse(res_int.serialized_output)['id']).to eq(789)
+  end
+  
+  it 'hanterar 404 Not Found från WooCommerce' do
+    mock_server.mock_endpoint(:get, '/customers/999', { 
+      'code' => 'rest_user_invalid_id', 
+      'message' => 'Invalid ID.' 
+    }, status: 404)
+      
+    expect {
+      tester.execute_action('retrieve_customer_by_id', { 'customerId' => 999 })
+    }.to raise_error(StandardError)
+  end
+
+  it 'returnerar felmeddelande om customerId saknas' do
+    mock_server.mock_endpoint(:get, '/unused-validation-path', { 'error' => 'should not be reached' })
+
+    expect {
+      tester.execute_action('retrieve_customer_by_id', {})
+    }.to raise_error(AppBridge::MisconfiguredError, /customerId parameter is required/)
+  end
+
+end

@@ -1,0 +1,6 @@
+{
+  "action_name": "retrieve_customer_by_id",
+  "method": "get",
+  "operation_id": "retrieveCustomerById",
+  "path": "/customers/{customerId}"
+}
