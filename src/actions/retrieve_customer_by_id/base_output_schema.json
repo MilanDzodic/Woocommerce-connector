@@ -9,47 +9,38 @@
     "billing": {
       "properties": {
         "address_1": {
-          "description": "Address line 1",
           "type": "string"
         },
         "address_2": {
-          "description": "Address line 2",
           "type": "string"
         },
         "city": {
-          "description": "City name.",
           "type": "string"
         },
         "company": {
-          "description": "Company name.",
           "type": "string"
         },
         "country": {
-          "description": "Country code in ISO 3166-1 alpha-2 format.",
+          "description": "Landskod i ISO 3166-1 alpha-2 format.",
           "type": "string"
         },
         "email": {
-          "description": "Email address.",
           "type": "string"
         },
         "first_name": {
-          "description": "First name.",
           "type": "string"
         },
         "last_name": {
-          "description": "Last name.",
           "type": "string"
         },
         "phone": {
-          "description": "Phone number.",
           "type": "string"
         },
         "postcode": {
-          "description": "Postal code.",
           "type": "string"
         },
         "state": {
-          "description": "ISO code or name of the state, province or district.",
+          "description": "ISO kod eller namn av region eller län",
           "type": "string"
         }
       },

@@ -5,7 +5,7 @@ RSpec.describe 'actions.retrieve_customer_by_id' do
 
   # Ladda WASM-appen (matchar din build)
   let(:app) do
-    AppBridge::App.new('target/wasm32-wasip2/release/github_connector.wasm')
+    AppBridge::App.new('target/wasm32-wasip2/release/woocommerce_connector.wasm')
   end
 
   # Skapa Connection-objektet med nödvändiga headers för AppBridge
@@ -17,7 +17,10 @@ RSpec.describe 'actions.retrieve_customer_by_id' do
         'base_url' => 'http://localhost:8080',
         'consumer_key' => 'ck_test',
         'consumer_secret' => 'cs_test',
-        'headers' => { 'Content-Type' => 'application/json' }
+        'headers' =>  { 'Authorization': 'Basic abc',
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json' 
+                      }
       }.to_json
     )
   end
@@ -30,7 +33,7 @@ RSpec.describe 'actions.retrieve_customer_by_id' do
     mock_server.clear_endpoints
   end
 
-  it 'hämtar kund med korrekt id och returnerar rätt data från Rust' do
+  it 'Retrieving customer with correct id and returning correct data from rust' do
     # 1. Förbered mock-svar
     mock_server.mock_endpoint(:get, '/customers/123', {
       'id' => 123,
@@ -57,7 +60,7 @@ RSpec.describe 'actions.retrieve_customer_by_id' do
     expect(data['first_name']).to eq('Anders')
   end
 
-  it 'accepterar både sträng och siffra som customerId i Rust-logiken' do
+  it 'Accepting both string and intiger as customer id in rust logic' do
     # Testa med sträng
     mock_server.mock_endpoint(:get, '/customers/456', { 'id' => 456 })
     res_str = tester.execute_action('retrieve_customer_by_id', { 'customerId' => '456' })
@@ -69,7 +72,7 @@ RSpec.describe 'actions.retrieve_customer_by_id' do
     expect(JSON.parse(res_int.serialized_output)['id']).to eq(789)
   end
   
-  it 'hanterar 404 Not Found från WooCommerce' do
+  it 'Handling 404 not found from Woocommerce' do
     mock_server.mock_endpoint(:get, '/customers/999', { 
       'code' => 'rest_user_invalid_id', 
       'message' => 'Invalid ID.' 
@@ -80,7 +83,7 @@ RSpec.describe 'actions.retrieve_customer_by_id' do
     }.to raise_error(StandardError)
   end
 
-  it 'returnerar felmeddelande om customerId saknas' do
+  it 'Returning error message if customerId is missing' do
     mock_server.mock_endpoint(:get, '/unused-validation-path', { 'error' => 'should not be reached' })
 
     expect {
