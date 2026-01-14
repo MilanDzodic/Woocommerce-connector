@@ -3,7 +3,19 @@
   "additionalProperties": false,
   "properties": {
     "customerId": {
+      "title": "Kund-ID",
       "type": "integer"
+    },
+    "on_not_found": {
+      "title": "Om kund inte hittas, vad vill du göra då?",
+      "type": "string",
+      "default": "fail",
+      "oneOf": [
+        { "const": "fail", "title": "Fallera" },
+        { "const": "continue", "title": "Fortsätt utan resultatsdata" },
+        { "const": "exit_level", "title": "Avsluta nivå" },
+        { "const": "exit_execution", "title": "Avsluta körning" }
+      ]
     }
   },
   "required": [
