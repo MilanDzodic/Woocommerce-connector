@@ -65,7 +65,7 @@ fn extract_path_parameters(input_data: &Value) -> Result<serde_json::Map<String,
       code: ErrorCode::Misconfigured,
       message: "customerId parameter is required".to_string(),
     })?;
-  
+
   params.insert("customerId".to_string(), Value::String(customer_id));
   Ok(params)
 }
@@ -74,7 +74,6 @@ fn build_endpoint(path_template: &str, params: &serde_json::Map<String, Value>) 
   let mut endpoint = path_template.to_string();
   for (key, value) in params {
     if let Some(value_str) = value.as_str() {
-      // Fix: lade till & framför format! för att lösa Sized-felet
       endpoint = endpoint.replace(&format!("{{{}}}", key), value_str);
     }
   }

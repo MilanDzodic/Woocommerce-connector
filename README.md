@@ -1,101 +1,89 @@
 WooCommerce Retrieve Customer by ID
-
-A connector project for retrieving a customer from WooCommerce based on the customer ID using the WooCommerce REST API.
-The project includes an action that calls WooCommerce and RSpec tests written in Ruby to verify the functionality.
-
+A connector project for retrieving a customer from WooCommerce based on the customer ID using the WooCommerce REST API. The project consists of a Rust-based action compiled to WebAssembly (WASM) and verified with RSpec tests in Ruby.
 
 🚀 Functionality
+This action performs the following:
 
-This repository contains an action that:
+Calls the WooCommerce REST API: GET /wp-json/wc/v3/customers/<id>.
 
-✔️ Calls the WooCommerce REST API
-✔️ Retrieves customer details by customer ID
-✔️ Returns the customer object for further use in integrations
+Handles dynamic path parameters for Customer IDs.
 
-The WooCommerce customer endpoint used is:
+Configurable Error Handling: Supports strategies if a customer is not found (fail, continue, exit_level, exit_execution).
 
-GET /wp-json/wc/v3/customers/<id>
-
-This endpoint returns a JSON object containing customer data (e.g. email, name, address) based on the provided ID.
-
+Returns the customer object as JSON for use in subsequent integration steps.
 
 🧱 Project Structure
-├── src/                         # Action source code
-├── spec/                        # Ruby tests (RSpec)
-├── docker-compose.test.yml      # Docker-based test environment
-├── .rspec                       # RSpec configuration
-├── Gemfile / Gemfile.lock       # Ruby dependencies
-├── Cargo.toml / build.rs        # Rust build configuration
-└── README.md                    # Project documentation
+Plaintext
 
+├── src/                         # Rust source code (Action & API Client)
+├── spec/                        # Ruby tests (RSpec)
+├── wit/                         # WebAssembly Interface definitions
+├── target/                      # Compiled WASM (generated during build)
+├── docker-compose.test.yml      # Docker-based test environment (Mock server)
+├── Cargo.toml                   # Rust dependencies and configuration
+└── Gemfile                      # Ruby dependencies for testing
 
 🏁 Getting Started (Local)
 🔧 Prerequisites
-
-Make sure you have the following installed:
+Rust with WASM target: rustup target add wasm32-wasip2
 
 Docker & Docker Compose
 
-Ruby (version defined in Gemfile)
+Ruby & Bundler (gem install bundler)
 
-Bundler (gem install bundler)
+🛠️ Development Workflow
+To run the project and verify changes, follow these three steps:
 
-RSpec (bundle install)
+1. Start the Test Environment (Mock Server)
+We use a mock server to simulate the WooCommerce API without needing a live store.
 
-
-🧪 Running the Test Environment
-
-Start the test environment using Docker Compose:
+Bash
 
 docker compose -f docker-compose.test.yml up -d
+If you encounter a container name conflict, run docker rm -f api-mock-server first.
 
-If you encounter a container name conflict such as
-/api-mock-server already in use, remove the existing container first:
+2. Build the WASM Binary
+The Rust code must be compiled into a WebAssembly component before the tests can be executed. This binary is what runs within the integration engine.
 
-docker rm -f api-mock-server
+Bash
 
+cargo build --release --target wasm32-wasip2
+3. Run the Ruby Tests (RSpec)
+Finally, run the tests which load the generated .wasm file and verify the logic against the mock server.
 
-🧠 Ruby Tests (RSpec)
+Bash
 
-All tests are located in the spec/ directory and can be run with:
-
+bundle install
 bundle exec rspec
+🧠 Tested Scenarios (RSpec)
+The tests in spec/ verify:
 
-The tests verify that:
+✅ API requests are built with correct headers and URLs.
 
-✔️ The WooCommerce API request is built correctly
-✔️ The response is handled as expected
-✔️ Error scenarios are properly managed
+✅ Successful responses (200 OK) are parsed correctly from JSON.
 
-🧩 Action Logic (Conceptual)
+✅ 404 Not Found handling based on the chosen strategy (e.g., returning null vs. raising an error).
 
-The action expects input similar to:
+✅ Input validation for both integer and string types for the Customer ID.
+
+🧩 Action Logic
+The action expects input following this schema:
+
+JSON
 
 {
-  "id": 123
+  "customerId": 123,
+  "on_not_found": "continue"
 }
+Extraction: The Rust code extracts customerId and builds the endpoint.
 
-The action performs the following steps:
+Request: A GET request is dispatched via the ApiClient.
 
-Builds the WooCommerce API URL
+Strategy: If the status code is 404, the on_not_found value determines if the execution should continue, stop the level, stop the execution, or fail.
 
-Sends a GET request to /customers/<id>
-
-Returns the customer object as JSON
-
-
-📦 Example Usage
-
-With a correctly configured connector client:
-
-response = client.get("/customers/123")
-puts response["email"]
-
+Response: On 200 OK, the full customer JSON object is returned.
 
 📜 WooCommerce API Reference
+Standard endpoint for customers: GET /wp-json/wc/v3/customers/<id>
 
-WooCommerce REST API customer endpoint:
-
-GET /wp-json/wc/v3/customers/<id>
-
-This endpoint returns full customer details in JSON format.
+Would you like me to add a section on how to document the output schema so users know which fields (email, names, etc.) are available for mapping?
