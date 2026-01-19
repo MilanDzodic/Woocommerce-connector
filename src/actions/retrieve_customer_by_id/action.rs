@@ -32,9 +32,15 @@ pub fn execute(context: ActionContext) -> Result<Value, AppError> {
 
   if status == 404 {
     return match on_not_found {
-      "continue" => Ok(Value::Null),
-      "exit_level" => Ok(json!({ "status": "exit_level", "data": null })),
-      "exit_execution" => Ok(json!({ "status": "exit_execution", "data": null })),
+      "continue" => Ok(json!({})),
+      "exit_level" => Err(AppError {
+        code: ErrorCode::CompleteParent,
+        message: "Stopping current level as customer was not found".to_string(),
+      }),
+      "exit_execution" => Err(AppError {
+        code: ErrorCode::CompleteWorkflow,
+        message: "Stopping entire execution as customer was not found".to_string(),
+      }),
       _ => Err(AppError {
         code: ErrorCode::Other,
         message: format!("Customer not found (404) at {}", endpoint),

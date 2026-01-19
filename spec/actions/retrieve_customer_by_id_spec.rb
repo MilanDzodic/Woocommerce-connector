@@ -69,43 +69,37 @@ RSpec.describe 'actions.retrieve_customer_by_id' do
     expect(JSON.parse(res_int.serialized_output)['id']).to eq(789)
   end
 
-  it 'Handling with null at 404 not found from Woocommerce' do
-    mock_server.mock_endpoint(:get, '/customers/999', {
-      'code' => 'rest_user_invalid_id',
-      'message' => 'Invalid ID.'
-    }, status: 404)
+  it 'returns an empty hash when customer is not found and strategy is continue' do
+    mock_server.mock_endpoint(:get, '/customers/999', { 'error' => 'Not Found' }, status: 404)
 
     result = tester.execute_action('retrieve_customer_by_id', {
       'customerId' => 999,
       'on_not_found' => 'continue'
     })
 
-    expect(result.serialized_output).to eq('null')
+    expect(result.serialized_output).to eq('{}')
   end
 
-  it 'Returns exit_level signal when customer is not found and strategy is exit_level' do
+  it 'raises CompleteParentException when customer is not found and strategy is exit_level' do
     mock_server.mock_endpoint(:get, '/customers/000', { 'error' => 'Not Found' }, status: 404)
 
-    result = tester.execute_action('retrieve_customer_by_id', {
-      'customerId' => '000',
-      'on_not_found' => 'exit_level'
-    })
-
-    data = JSON.parse(result.serialized_output)
-    expect(data['status']).to eq('exit_level')
-    expect(data['data']).to be_nil
+    expect {
+      tester.execute_action('retrieve_customer_by_id', {
+        'customerId' => '000',
+        'on_not_found' => 'exit_level'
+      })
+    }.to raise_error(AppBridge::CompleteParentException)
   end
 
-  it 'Returns exit_execution signal when customer is not found and strategy is exit_execution' do
+  it 'raises CompleteWorkflowException when customer is not found and strategy is exit_execution' do
     mock_server.mock_endpoint(:get, '/customers/000', { 'error' => 'Not Found' }, status: 404)
 
-    result = tester.execute_action('retrieve_customer_by_id', {
-      'customerId' => '000',
-      'on_not_found' => 'exit_execution'
-    })
-
-    data = JSON.parse(result.serialized_output)
-    expect(data['status']).to eq('exit_execution')
+    expect {
+      tester.execute_action('retrieve_customer_by_id', {
+        'customerId' => '000',
+        'on_not_found' => 'exit_execution'
+      })
+    }.to raise_error(AppBridge::CompleteWorkflowException)
   end
 
   it 'Raises an error when customer is not found and strategy is fail' do
