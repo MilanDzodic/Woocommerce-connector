@@ -1,0 +1,190 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "avatar_url": {
+      "title": "Avatar URL.",
+      "type": "string"
+    },
+    "billing": {
+      "properties": {
+        "address_1": {
+          "title": "Adress",
+          "type": "string"
+        },
+        "address_2": {
+          "title": "C/O",
+          "type": "string"
+        },
+        "city": {
+          "title": "Stad",
+          "type": "string"
+        },
+        "company": {
+          "title": "Företag",
+          "type": "string"
+        },
+        "country": {
+          "title": "Land",
+          "type": "string"
+        },
+        "email": {
+          "title": "Email",
+          "type": "string"
+        },
+        "first_name": {
+          "title": "Förnamn",
+          "type": "string"
+        },
+        "last_name": {
+          "title": "Efternamn",
+          "type": "string"
+        },
+        "phone": {
+          "title": "Telefon",
+          "type": "string"
+        },
+        "postcode": {
+          "title": "Postnummer",
+          "type": "string"
+        },
+        "state": {
+          "title": "Län",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "date_created": {
+      "title": "Datum kund skapad enligt sidans tidszon.",
+      "format": "date-time",
+      "type": "string"
+    },
+    "date_created_gmt": {
+      "description": "Datum kund skapad enligt GMT.",
+      "format": "date-time",
+      "type": "string"
+    },
+    "date_modified": {
+      "title": "Senast ändrad enligt sidans tidszon",
+      "format": "date-time",
+      "type": "string"
+    },
+    "date_modified_gmt": {
+      "title": "Senast ändrad enligt GMT",
+      "format": "date-time",
+      "type": "string"
+    },
+    "email": {
+      "title": "Email",
+      "type": "string"
+    },
+    "first_name": {
+      "title": "Förnamn",
+      "type": "string"
+    },
+    "id": {
+      "title": "Id",
+      "type": "integer"
+    },
+    "is_paying_customer": {
+      "title": "Betalande kund?",
+      "type": "boolean"
+    },
+    "last_name": {
+      "title": "Efternamn",
+      "type": "string"
+    },
+    "meta_data": {
+      "title": "Meta Data",
+      "items": {
+        "properties": {
+          "display_key": {
+            "title": "Meta Nyckel",
+            "description": "Meta nyckel för UI visning.",
+            "type": "string"
+          },
+          "display_value": {
+            "title": "Meta Värde",
+            "description": "Meta värde för UI visning.",
+            "properties": {},
+            "type": "object"
+          },
+          "id": {
+            "title": "Meta Id",
+            "type": "integer"
+          },
+          "key": {
+            "title": "Meta Nyckel",
+            "type": "string"
+          },
+          "value": {
+            "title": "Meta Värde",
+            "properties": {},
+            "type": "object"
+          }
+        },
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "password": {
+      "title": "Lösenord",
+      "type": "string"
+    },
+    "role": {
+      "title": "Kundroll",
+      "type": "string"
+    },
+    "shipping": {
+      "properties": {
+        "address_1": {
+          "title": "Adress",
+          "type": "string"
+        },
+        "address_2": {
+          "title": "C/O",
+          "type": "string"
+        },
+        "city": {
+          "title": "Stad",
+          "type": "string"
+        },
+        "company": {
+         "title": "Företag",
+          "type": "string"
+        },
+        "country": {
+          "title": "Land",
+          "type": "string"
+        },
+        "first_name": {
+          "title": "Förnamn",
+          "type": "string"
+        },
+        "last_name": {
+          "title": "Efternamn",
+          "type": "string"
+        },
+        "phone": {
+          "title": "Telefon",
+          "type": "string"
+        },
+        "postcode": {
+          "title": "Postnummer",
+          "type": "string"
+        },
+        "state": {
+          "title": "Län",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "username": {
+      "title": "Kundens Login",
+      "type": "string"
+    }
+  },
+  "type": "object"
+}

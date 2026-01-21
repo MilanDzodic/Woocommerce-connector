@@ -24,21 +24,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "c08606f8c3cbf4ce6ec8e28fb0014a2c086708fe954eaa885384a6165172e7e8"
 
 [[package]]
-name = "base-connector"
-version = "0.1.0"
-dependencies = [
- "chrono",
- "once_cell",
- "serde",
- "serde_json",
- "serde_yaml",
- "tokio",
- "toml",
- "urlencoding",
- "wit-bindgen",
-]
-
-[[package]]
 name = "bitflags"
 version = "2.10.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -795,4 +780,19 @@ dependencies = [
  "serde_json",
  "unicode-xid",
  "wasmparser",
+]
+
+[[package]]
+name = "woocommerce_connector"
+version = "0.1.0"
+dependencies = [
+ "chrono",
+ "once_cell",
+ "serde",
+ "serde_json",
+ "serde_yaml",
+ "tokio",
+ "toml",
+ "urlencoding",
+ "wit-bindgen",
 ]
