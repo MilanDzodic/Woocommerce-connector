@@ -1,0 +1,272 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "after": {
+      "type": "string"
+    },
+    "attribute": {
+      "type": "string"
+    },
+    "attribute_term": {
+      "type": "string"
+    },
+    "before": {
+      "type": "string"
+    },
+    "category": {
+      "type": "string"
+    },
+    "context": {
+      "anyOf": [
+        {
+          "const": "view"
+        },
+        {
+          "const": "edit"
+        }
+      ],
+      "default": "view",
+      "type": "string"
+    },
+    "dates_are_gmt": {
+      "type": "boolean"
+    },
+    "downloadable": {
+      "type": "boolean"
+    },
+    "exclude": {
+      "items": {
+        "type": "integer"
+      },
+      "type": "array"
+    },
+    "exclude_status": {
+      "items": {
+        "enum": [
+          "future",
+          "trash",
+          "draft",
+          "pending",
+          "private",
+          "publish"
+        ],
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "exclude_types": {
+      "items": {
+        "enum": [
+          "simple",
+          "grouped",
+          "external",
+          "variable"
+        ],
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "featured": {
+      "type": "boolean"
+    },
+    "include": {
+      "items": {
+        "type": "integer"
+      },
+      "type": "array"
+    },
+    "include_status": {
+      "items": {
+        "enum": [
+          "any",
+          "future",
+          "trash",
+          "draft",
+          "pending",
+          "private",
+          "publish"
+        ],
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "include_types": {
+      "items": {
+        "enum": [
+          "simple",
+          "grouped",
+          "external",
+          "variable"
+        ],
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "max_price": {
+      "type": "string"
+    },
+    "min_price": {
+      "type": "string"
+    },
+    "modified_after": {
+      "type": "string"
+    },
+    "modified_before": {
+      "type": "string"
+    },
+    "offset": {
+      "type": "integer"
+    },
+    "on_sale": {
+      "type": "boolean"
+    },
+    "order": {
+      "anyOf": [
+        {
+          "const": "asc"
+        },
+        {
+          "const": "desc"
+        }
+      ],
+      "default": "desc",
+      "type": "string"
+    },
+    "orderby": {
+      "anyOf": [
+        {
+          "const": "date"
+        },
+        {
+          "const": "modified"
+        },
+        {
+          "const": "id"
+        },
+        {
+          "const": "include"
+        },
+        {
+          "const": "title"
+        },
+        {
+          "const": "slug"
+        },
+        {
+          "const": "price"
+        },
+        {
+          "const": "popularity"
+        },
+        {
+          "const": "rating"
+        },
+        {
+          "const": "menu_order"
+        }
+      ],
+      "default": "date",
+      "type": "string"
+    },
+    "page": {
+      "default": 1,
+      "type": "integer"
+    },
+    "parent": {
+      "items": {
+        "type": "integer"
+      },
+      "type": "array"
+    },
+    "parent_exclude": {
+      "items": {
+        "type": "integer"
+      },
+      "type": "array"
+    },
+    "per_page": {
+      "default": 10,
+      "type": "integer"
+    },
+    "search": {
+      "type": "string"
+    },
+    "shipping_class": {
+      "type": "string"
+    },
+    "sku": {
+      "type": "string"
+    },
+    "slug": {
+      "type": "string"
+    },
+    "status": {
+      "items": {
+        "default": "any",
+        "enum": [
+          "any",
+          "draft",
+          "pending",
+          "private",
+          "publish"
+        ],
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "stock_status": {
+      "anyOf": [
+        {
+          "const": "instock"
+        },
+        {
+          "const": "outofstock"
+        },
+        {
+          "const": "onbackorder"
+        }
+      ],
+      "type": "string"
+    },
+    "tag": {
+      "type": "string"
+    },
+    "tax_class": {
+      "anyOf": [
+        {
+          "const": "standard"
+        },
+        {
+          "const": "reduced-rate"
+        },
+        {
+          "const": "zero-rate"
+        }
+      ],
+      "type": "string"
+    },
+    "type": {
+      "anyOf": [
+        {
+          "const": "simple"
+        },
+        {
+          "const": "grouped"
+        },
+        {
+          "const": "external"
+        },
+        {
+          "const": "variable"
+        }
+      ],
+      "type": "string"
+    },
+    "virtual": {
+      "type": "boolean"
+    }
+  },
+  "required": [],
+  "type": "object"
+}
