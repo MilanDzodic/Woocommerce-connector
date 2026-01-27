@@ -5,10 +5,10 @@ services:
     image: wiremock/wiremock:latest
     container_name: api-mock-server
     ports:
-      - "8080:8080"
+      - "8081:8081"
     command: --global-response-templating --verbose
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8080/__admin/health"]
+      test: ["CMD", "curl", "-f", "http://localhost:8081/__admin/health"]
       interval: 5s
       timeout: 3s
       retries: 5

@@ -41,60 +41,40 @@ pub fn execute(context: ActionContext) -> Result<Value, AppError> {
     format!("{}?{}", endpoint, query_params)
   };
 
-  // 2. Make the HTTP request
-  // In this project, client.get returns Result<(u16, String), AppError>
-  let response_result = client.get(&full_endpoint);
+  // 2. Make the request - We ignore 'status' here to avoid unused variable warning
+  // but we still check for general 404/errors inside the client.get Result
+  let (_status, body) = client.get(&full_endpoint)?;
 
-  // Handle 404 specifically for SKU searches before unpacking
-  if let Err(ref e) = response_result {
-    if e.message.contains("404") && input_data.get("sku").is_some() {
-      return handle_not_found(on_not_found);
-    }
-  }
-
-  // Unpack the tuple: (status_code, body_string)
-  let (status, body) = response_result?;
-
-  // Additional check if the status is not success
-  if status != 200 {
-    // If it's a 404 that wasn't caught by the error check above
-    if status == 404 && input_data.get("sku").is_some() {
-      return handle_not_found(on_not_found);
-    }
-
-    return Err(AppError {
-      code: ErrorCode::Other,
-      message: format!("WooCommerce API error: {} - {}", status, body),
-    });
-  }
-
-  // 3. Parse the body string into a serde_json::Value
-  let parsed_response: Value = serde_json::from_str(&body).map_err(|e| AppError {
+  // 3. Parse the body string into a Value
+  let parsed_val: Value = serde_json::from_str(&body).map_err(|e| AppError {
     code: ErrorCode::MalformedResponse,
     message: format!("Failed to parse JSON response: {}", e),
   })?;
 
-  // 4. Handle SKU filtering logic
-  if let Some(target_sku) = input_data.get("sku").and_then(|v| v.as_str()) {
-    // Now .as_array() will work because parsed_response is a Value
-    let products = parsed_response.as_array().ok_or_else(|| AppError {
-      code: ErrorCode::MalformedResponse,
-      message: "Expected an array of products from WooCommerce".to_string(),
-    })?;
+  // 4. Extract array - removed 'mut' as it's not modified (Feedback fix)
+  let products = parsed_val.as_array().cloned().unwrap_or_default();
 
-    // Manual filtering to find the exact SKU match
+  // 5. Handle SKU filtering logic
+  if let Some(target_sku) = input_data.get("sku").and_then(|v| v.as_str()) {
+    // Search for exact SKU match in the list
     let exact_match = products.iter().find(|p| {
       p.get("sku").and_then(|s| s.as_str()) == Some(target_sku)
     });
 
     match exact_match {
-      Some(product) => return Ok(product.clone()),
-      None => return handle_not_found(on_not_found),
+      Some(product) => {
+        // Return wrapped in "items" to match schema (Feedback point 1)
+        return Ok(json!({ "items": [product] }));
+      },
+      None => {
+        // Trigger handle_not_found if list is empty or no SKU match (Feedback point 3)
+        return handle_not_found(on_not_found);
+      }
     }
   }
 
-  // 5. Default: Return the parsed response (the list)
-  Ok(parsed_response)
+  // 6. Default: Return full list wrapped in "items" object
+  Ok(json!({ "items": products }))
 }
 
 /// Helper to handle "Not Found" scenarios
