@@ -41,39 +41,35 @@ pub fn execute(context: ActionContext) -> Result<Value, AppError> {
     format!("{}?{}", endpoint, query_params)
   };
 
-  // 2. Make the request - We ignore 'status' here to avoid unused variable warning
-  // but we still check for general 404/errors inside the client.get Result
+  // 2. Make the HTTP request
+  // We receive the status and body.
+  // Note: For full pagination support, we might need to look at response headers
+  // like 'X-WP-Total' and 'X-WP-TotalPages' in the future.
   let (_status, body) = client.get(&full_endpoint)?;
 
-  // 3. Parse the body string into a Value
+  // 3. Parse the body string into a serde_json::Value
   let parsed_val: Value = serde_json::from_str(&body).map_err(|e| AppError {
     code: ErrorCode::MalformedResponse,
     message: format!("Failed to parse JSON response: {}", e),
   })?;
 
-  // 4. Extract array - removed 'mut' as it's not modified (Feedback fix)
+  // 4. Extract products array
   let products = parsed_val.as_array().cloned().unwrap_or_default();
 
-  // 5. Handle SKU filtering logic
-  if let Some(target_sku) = input_data.get("sku").and_then(|v| v.as_str()) {
-    // Search for exact SKU match in the list
-    let exact_match = products.iter().find(|p| {
-      p.get("sku").and_then(|s| s.as_str()) == Some(target_sku)
-    });
-
-    match exact_match {
-      Some(product) => {
-        // Return wrapped in "items" to match schema (Feedback point 1)
-        return Ok(json!({ "items": [product] }));
-      },
-      None => {
-        // Trigger handle_not_found if list is empty or no SKU match (Feedback point 3)
-        return handle_not_found(on_not_found);
-      }
+  // 5. Handle SKU specific logic (Unique lookup)
+  // If a SKU is provided, we expect a result. If empty, we trigger the chosen strategy.
+  if input_data.get("sku").and_then(|v| v.as_str()).is_some() {
+    if products.is_empty() {
+      return handle_not_found(on_not_found);
     }
+
+    // Even if SKU is unique, WooCommerce returns an array.
+    // We wrap it in "items" to keep the output schema consistent.
+    return Ok(json!({ "items": products }));
   }
 
-  // 6. Default: Return full list wrapped in "items" object
+  // 6. Default: Return the product list wrapped in "items"
+  // For large datasets, the user should provide 'page' and 'per_page' in the input.
   Ok(json!({ "items": products }))
 }
 
@@ -100,15 +96,18 @@ fn handle_not_found(strategy: &str) -> Result<Value, AppError> {
 fn build_query_parameters(input_data: &Value) -> Result<String, AppError> {
   let mut query_parts = Vec::new();
 
+  // 1. Add fixed pagination parameters managed by the system (Feedback fix)
+  // We set a standard per_page limit to ensure stable performance
+  query_parts.push("per_page=100".to_string());
+  query_parts.push("page=1".to_string());
+
+  // 2. Define allowed user-facing filters
   let params = vec![
-    "context", "page", "per_page", "search", "after", "before",
-    "modified_after", "modified_before", "dates_are_gmt", "exclude",
-    "include", "offset", "order", "orderby", "parent",
-    "parent_exclude", "slug", "status", "include_status",
-    "exclude_status", "type", "include_types", "exclude_types",
-    "sku", "featured", "category", "tag", "shipping_class",
-    "attribute", "attribute_term", "tax_class", "on_sale",
-    "min_price", "max_price", "stock_status", "virtual", "downloadable"
+    "context", "search", "after", "before",
+    "exclude", "include", "offset", "order", "orderby", "parent",
+    "parent_exclude", "slug", "status", "type", "sku", "featured",
+    "category", "tag", "shipping_class", "attribute", "attribute_term",
+    "tax_class", "on_sale", "min_price", "max_price", "stock_status"
   ];
 
   for param in params {
@@ -121,14 +120,35 @@ fn build_query_parameters(input_data: &Value) -> Result<String, AppError> {
 /// Add a query parameter if it exists in input_data
 fn add_query_parameter(input_data: &Value, param_name: &str, query_parts: &mut Vec<String>) {
   if let Some(value) = input_data.get(param_name) {
-    if let Some(str_val) = value.as_str() {
-      if !str_val.is_empty() {
-        query_parts.push(format!("{}={}", param_name, urlencoding::encode(str_val)));
+    match value {
+      // Only add string parameters if they are not an empty string
+      Value::String(s) if !s.is_empty() => {
+        query_parts.push(format!("{}={}", param_name, urlencoding::encode(s)));
       }
-    } else if let Some(int_val) = value.as_i64() {
-      query_parts.push(format!("{}={}", param_name, int_val));
-    } else if let Some(bool_val) = value.as_bool() {
-      query_parts.push(format!("{}={}", param_name, bool_val));
+      // Handle arrays (e.g., 'include' or 'exclude' lists)
+      // Only add if the array contains at least one non-empty element
+      Value::Array(arr) if !arr.is_empty() => {
+        let values: Vec<String> = arr.iter()
+          .filter_map(|v| v.as_str())
+          .filter(|s| !s.is_empty())
+          .map(|s| s.to_string())
+          .collect();
+
+        if !values.is_empty() {
+          // WooCommerce expects comma-separated values for array filters
+          let joined = values.join(",");
+          query_parts.push(format!("{}={}", param_name, urlencoding::encode(&joined)));
+        }
+      }
+      // Numbers and booleans are always considered valid values
+      Value::Number(n) => {
+        query_parts.push(format!("{}={}", param_name, n));
+      }
+      Value::Bool(b) => {
+        query_parts.push(format!("{}={}", param_name, b));
+      }
+      // Ignore Null, empty strings, empty arrays, or objects
+      _ => {}
     }
   }
 }
