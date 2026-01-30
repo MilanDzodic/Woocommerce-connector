@@ -76,7 +76,7 @@ pub fn execute(context: ActionContext) -> Result<Value, AppError> {
 /// Helper to handle "Not Found" scenarios
 fn handle_not_found(strategy: &str) -> Result<Value, AppError> {
   match strategy {
-    "continue" => Ok(json!({})),
+    "continue" => Ok(json!({ "items": [] })),
     "exit_level" => Err(AppError {
       code: ErrorCode::CompleteParent,
       message: "Product with specified SKU not found.".to_string(),
@@ -92,25 +92,34 @@ fn handle_not_found(strategy: &str) -> Result<Value, AppError> {
   }
 }
 
-/// Build query parameters from input data
+/// Build query parameters. Uses input values for pagination if provided,
+/// otherwise falls back to defaults (Feedback fix).
 fn build_query_parameters(input_data: &Value) -> Result<String, AppError> {
   let mut query_parts = Vec::new();
 
-  // 1. Add fixed pagination parameters managed by the system (Feedback fix)
-  // We set a standard per_page limit to ensure stable performance
-  query_parts.push("per_page=100".to_string());
-  query_parts.push("page=1".to_string());
+  // 1. Handle Pagination with defaults
+  let page = input_data.get("page")
+    .and_then(|v| v.as_i64())
+    .unwrap_or(1);
 
-  // 2. Define allowed user-facing filters
+  let per_page = input_data.get("per_page")
+    .and_then(|v| v.as_i64())
+    .unwrap_or(100);
+
+  query_parts.push(format!("page={}", page));
+  query_parts.push(format!("per_page={}", per_page));
+
+  // 2. Define other allowed filters
   let params = vec![
-    "context", "search", "after", "before",
-    "exclude", "include", "offset", "order", "orderby", "parent",
-    "parent_exclude", "slug", "status", "type", "sku", "featured",
-    "category", "tag", "shipping_class", "attribute", "attribute_term",
-    "tax_class", "on_sale", "min_price", "max_price", "stock_status"
+    "context", "search", "after", "before", "exclude", "include",
+    "offset", "order", "orderby", "parent", "parent_exclude", "slug",
+    "status", "type", "sku", "featured", "category", "tag",
+    "shipping_class", "attribute", "attribute_term", "tax_class",
+    "on_sale", "min_price", "max_price", "stock_status"
   ];
 
   for param in params {
+    // Our updated add_query_parameter already skips empty/null values
     add_query_parameter(input_data, param, &mut query_parts);
   }
 

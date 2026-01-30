@@ -52,6 +52,18 @@
       "enum": ["fail", "continue", "exit_level", "exit_execution"],
       "default": "fail",
       "description": "Bestämmer vad som ska hända om ingen produkt hittas (viktigt vid SKU-sökning)."
+    },
+    "page": {
+      "type": "integer",
+      "title": "Sida",
+      "default": 1,
+      "description": "Vilken sida av resultaten som ska hämtas."
+    },
+    "per_page": {
+      "type": "integer",
+      "title": "Antal per sida",
+      "default": 100,
+      "description": "Hur många produkter som ska hämtas per anrop (max 100)."
     }
   }
 }
