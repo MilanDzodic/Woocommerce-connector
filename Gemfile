@@ -4,7 +4,7 @@ source 'https://rubygems.org'
 
 ruby '3.4.2'
 
-gem 'app_bridge', '3.0.0'
+gem 'app_bridge', '4.0.0'
 
 # RSpec for testing
 gem 'rspec', '~> 3.12'

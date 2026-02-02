@@ -1,0 +1,69 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "type": "object",
+  "properties": {
+    "sku": {
+      "type": "string",
+      "title": "SKU (Artikelnr)",
+      "description": "Filtrera produkter baserat på ett unikt artikelnummer."
+    },
+    "search": {
+      "type": "string",
+      "title": "Sökord",
+      "description": "Begränsa resultat till produkter som matchar en söksträng i namn eller beskrivning."
+    },
+    "status": {
+      "type": "string",
+      "title": "Status",
+      "enum": ["any", "draft", "pending", "private", "publish"],
+      "default": "publish",
+      "description": "Filtrera produkter baserat på deras status."
+    },
+    "type": {
+      "type": "string",
+      "title": "Produkttyp",
+      "enum": ["simple", "grouped", "external", "variable"],
+      "description": "Hämta endast produkter av en specifik typ."
+    },
+    "category": {
+      "type": "string",
+      "title": "Kategori-ID",
+      "description": "Filtrera produkter baserat på ett eller flera kategori-ID:n (kommaseparerat)."
+    },
+    "on_sale": {
+      "type": "boolean",
+      "title": "Reaprodukter",
+      "description": "Visa endast produkter som har ett aktivt reapris just nu."
+    },
+    "min_price": {
+      "type": "string",
+      "title": "Minsta pris",
+      "description": "Hämta produkter med ett pris högre än eller lika med detta värde."
+    },
+    "max_price": {
+      "type": "string",
+      "title": "Högsta pris",
+      "description": "Hämta produkter med ett pris lägre än eller lika med detta värde."
+    },
+    "on_not_found": {
+      "type": "string",
+      "title": "Hantering vid saknad produkt",
+      "enum": ["fail", "continue", "exit_level", "exit_execution"],
+      "default": "fail",
+      "description": "Bestämmer vad som ska hända om ingen produkt hittas (viktigt vid SKU-sökning)."
+    },
+    "page": {
+      "type": "integer",
+      "title": "Sida",
+      "default": 1,
+      "description": "Vilken sida av resultaten som ska hämtas."
+    },
+    "per_page": {
+      "type": "integer",
+      "title": "Antal per sida",
+      "default": 100,
+      "description": "Hur många produkter som ska hämtas per anrop (max 100)."
+    }
+  }
+}

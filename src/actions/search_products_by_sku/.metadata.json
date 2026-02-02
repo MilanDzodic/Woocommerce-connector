@@ -1,0 +1,6 @@
+{
+  "action_name": "list_all_products",
+  "method": "get",
+  "operation_id": "listAllProducts",
+  "path": "/products"
+}

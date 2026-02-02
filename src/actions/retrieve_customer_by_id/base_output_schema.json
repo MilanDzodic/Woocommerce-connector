@@ -128,10 +128,6 @@
       },
       "type": "array"
     },
-    "password": {
-      "title": "Lösenord",
-      "type": "string"
-    },
     "role": {
       "title": "Kundroll",
       "type": "string"
