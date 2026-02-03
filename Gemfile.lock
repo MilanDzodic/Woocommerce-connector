@@ -1,10 +1,10 @@
 GEM
   remote: https://rubygems.org/
   specs:
-    app_bridge (4.0.0)
+    app_bridge (3.0.0)
       rb_sys (~> 0.9.110)
-    app_bridge (4.0.0-arm64-darwin)
-    app_bridge (4.0.0-x86_64-linux)
+    app_bridge (3.0.0-arm64-darwin)
+    app_bridge (3.0.0-x86_64-linux)
     ast (2.4.3)
     benchmark-malloc (0.2.0)
     benchmark-perf (0.6.0)
@@ -20,9 +20,9 @@ GEM
     prism (1.5.1)
     racc (1.8.1)
     rainbow (3.1.1)
-    rake-compiler-dock (1.11.0)
-    rb_sys (0.9.124)
-      rake-compiler-dock (= 1.11.0)
+    rake-compiler-dock (1.9.1)
+    rb_sys (0.9.117)
+      rake-compiler-dock (= 1.9.1)
     regexp_parser (2.11.3)
     rspec (3.13.1)
       rspec-core (~> 3.13.0)
@@ -80,7 +80,7 @@ PLATFORMS
   x86_64-linux
 
 DEPENDENCIES
-  app_bridge (= 4.0.0)
+  app_bridge (= 3.0.0)
   rspec (~> 3.12)
   rspec-benchmark (~> 0.6)
   rubocop (~> 1.50)
