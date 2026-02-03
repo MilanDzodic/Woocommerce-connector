@@ -34,12 +34,14 @@ RSpec.describe 'actions.list_all_products' do
   it 'successfully retrieves a product by SKU' do
     sku = 'GTX-1080-TI'
 
+    url = "/products?page=1&per_page=100&sku=#{sku}"
+
     # WooCommerce returns a list, Rust code filters it and wraps in { "items": [...] }
-    mock_server.mock_endpoint(:get, "/products?page=1&per_page=100&sku=GTX-1080-TI", [
+    mock_server.mock_endpoint(:get, url, [
       { 'id' => 555, 'sku' => 'GTX-1080-TI' }
     ])
 
-    response = tester.execute_action('search_products_by_sku', { 'sku' => sku })
+    response = tester.execute_action('search_products', { 'sku' => sku })
     data = JSON.parse(response.serialized_output)
 
     # We now expect an object with an 'items' array (Feedback point 1)
@@ -51,19 +53,16 @@ RSpec.describe 'actions.list_all_products' do
   it 'handles multiple query parameters correctly regardless of order' do
     params = {
       'sku' => 'BLUE-SHIRT',
-      'status' => 'publish',
-      'per_page' => 1
+      'status' => 'publish'
     }
 
-    # Use a Regexp to match the URL regardless of parameter order (Feedback point 4)
-    # This regex ensures all required parameters exist in the query string
-    expected_url = "/products?per_page=1&status=publish&sku=BLUE-SHIRT"
+    url = "/products?page=1&per_page=100&status=publish&sku=BLUE-SHIRT"
 
-    mock_server.mock_endpoint(:get, "/products?page=1&per_page=1&status=publish&sku=BLUE-SHIRT", [
+    mock_server.mock_endpoint(:get, url, [
       { 'id' => 1, 'sku' => 'BLUE-SHIRT' }
     ])
 
-    response = tester.execute_action('search_products_by_sku', params)
+    response = tester.execute_action('search_products', params)
     data = JSON.parse(response.serialized_output)
 
     expect(data['items']).to be_an(Array)
@@ -72,9 +71,9 @@ RSpec.describe 'actions.list_all_products' do
 
   it 'returns an empty items list when no product matches the SKU and strategy is continue' do
     url = "/products?page=1&per_page=100&sku=NON-EXISTENT"
-    mock_server.mock_endpoint(:get, url, []) # Returnera tom lista
+    mock_server.mock_endpoint(:get, url, [])
 
-    response = tester.execute_action('search_products_by_sku', { 'sku' => 'NON-EXISTENT', 'on_not_found' => 'continue' })
+    response = tester.execute_action('search_products', { 'sku' => 'NON-EXISTENT', 'on_not_found' => 'continue' })
 
     data = JSON.parse(response.serialized_output)
 
@@ -88,7 +87,7 @@ RSpec.describe 'actions.list_all_products' do
       mock_server.mock_endpoint(:get, url, body, status: 404)
 
       expect {
-        tester.execute_action('search_products_by_sku', {
+        tester.execute_action('search_products', {
           'sku' => 'FAIL',
           'on_not_found' => 'exit_level'
         })
@@ -97,10 +96,10 @@ RSpec.describe 'actions.list_all_products' do
 
     it 'raises CompleteParentException if product is not found in result list' do
       url = "/products?page=1&per_page=100&sku=EMPTY-LIST"
-      mock_server.mock_endpoint(:get, url, []) # API svarar 200 men lista är tom
+      mock_server.mock_endpoint(:get, url, [])
 
       expect {
-        tester.execute_action('search_products_by_sku', {
+        tester.execute_action('search_products', {
           'sku' => 'EMPTY-LIST',
           'on_not_found' => 'exit_level'
         })

@@ -1,0 +1,154 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "type": "object",
+  "properties": {
+    "items": {
+      "type": "array",
+      "title": "Produkter",
+      "description": "En lista över produkter som matchar sökningen.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "title": "ID",
+            "description": "Unik identifierare för produkten.",
+            "type": "integer"
+          },
+          "name": {
+            "title": "Namn",
+            "description": "Produktens namn.",
+            "type": "string"
+          },
+          "sku": {
+            "title": "Artikelnr (SKU)",
+            "description": "Unikt artikelnummer för produkten.",
+            "type": "string"
+          },
+          "price": {
+            "title": "Pris",
+            "description": "Nuvarande pris på produkten.",
+            "type": "string"
+          },
+          "regular_price": {
+            "title": "Ordinarie pris",
+            "description": "Produktens normalpris utan rabatt.",
+            "type": "string"
+          },
+          "sale_price": {
+            "title": "Reapris",
+            "description": "Produktens aktuella reapris.",
+            "type": "string"
+          },
+          "on_sale": {
+            "title": "På rea",
+            "description": "Indikerar om produkten säljs till reapris just nu.",
+            "type": "boolean"
+          },
+          "stock_status": {
+            "title": "Lagerstatus",
+            "description": "Aktuell lagerstatus (instock, outofstock, onbackorder).",
+            "type": "string"
+          },
+          "stock_quantity": {
+            "title": "Lagerantal",
+            "description": "Antal produkter som finns i lager.",
+            "type": "integer"
+          },
+          "description": {
+            "title": "Beskrivning",
+            "description": "Fullständig produktbeskrivning.",
+            "type": "string"
+          },
+          "short_description": {
+            "title": "Kort beskrivning",
+            "description": "Kortare sammanfattning eller ingress.",
+            "type": "string"
+          },
+          "permalink": {
+            "title": "Direktlänk",
+            "description": "Webbadress till produkten i webshoppen.",
+            "type": "string"
+          },
+          "status": {
+            "title": "Status",
+            "description": "Publiceringsstatus (t.ex. publish, draft).",
+            "type": "string"
+          },
+          "type": {
+            "title": "Produkttyp",
+            "description": "Typ av produkt (simple, variable, etc.).",
+            "type": "string"
+          },
+          "categories": {
+            "title": "Kategorier",
+            "description": "Lista över kategorier som produkten tillhör.",
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": { "title": "Kategori-ID", "type": "integer" },
+                "name": { "title": "Kategorinamn", "type": "string" },
+                "slug": { "title": "Kategorislug", "type": "string" }
+              }
+            }
+          },
+          "images": {
+            "title": "Bilder",
+            "description": "Lista över produktbilder.",
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": { "title": "Bild-ID", "type": "integer" },
+                "src": { "title": "Bildadress (URL)", "type": "string" },
+                "name": { "title": "Bildnamn", "type": "string" },
+                "alt": { "title": "Alternativ text", "type": "string" }
+              }
+            }
+          },
+          "attributes": {
+            "title": "Attribut",
+            "description": "Lista över produktattribut (t.ex. storlek, färg).",
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": { "title": "Attribut-ID", "type": "integer" },
+                "name": { "title": "Namn", "type": "string" },
+                "option": { "title": "Valt alternativ", "type": "string" },
+                "slug": { "title": "Slug", "type": "string" }
+              }
+            }
+          },
+          "dimensions": {
+            "title": "Dimensioner",
+            "description": "Produktens fysiska mått.",
+            "type": "object",
+            "properties": {
+              "length": { "title": "Längd", "type": "string" },
+              "width": { "title": "Bredd", "type": "string" },
+              "height": { "title": "Höjd", "type": "string" }
+            }
+          },
+          "weight": {
+            "title": "Vikt",
+            "description": "Produktens vikt.",
+            "type": "string"
+          },
+          "date_created": {
+            "title": "Skapad datum",
+            "description": "Datum då produkten skapades.",
+            "type": "string",
+            "format": "date-time"
+          },
+          "manage_stock": {
+            "title": "Hantera lager",
+            "description": "Om lagerhantering är aktiverad för produkten.",
+            "type": "boolean"
+          }
+        }
+      }
+    }
+  }
+}
