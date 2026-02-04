@@ -28,53 +28,65 @@ pub fn execute(context: ActionContext) -> Result<Value, AppError> {
     let client = client(&context)?;
     let input_data = input_data(&context)?;
 
-    // Determine the strategy to use if no products are found
     let on_not_found = input_data.get("on_not_found")
         .and_then(|v| v.as_str())
         .unwrap_or("fail");
 
-    // 1. Build query parameters from input data
-    // Note: 'page' and 'per_page' are no longer taken from input_data to keep the UI clean
     let query_params = build_query_parameters(&input_data)?;
 
-    // 2. Construct the full endpoint with internal pagination
-    // We hardcode page=1 and per_page=100 to handle pagination in the background
-    let mut full_endpoint = "/products?page=1&per_page=100".to_string();
+    let mut all_products = Vec::new();
+    let mut current_page = 1;
+    let per_page = 100;
 
-    if !query_params.is_empty() {
-        // If query_params already starts with '&', don't add another one
-        if !query_params.starts_with('&') {
-            full_endpoint.push('&');
+    loop {
+        // 1. Bygg URL för aktuell sida
+        let mut endpoint = format!("/products?page={}&per_page={}", current_page, per_page);
+        if !query_params.is_empty() {
+            endpoint.push('&');
+            endpoint.push_str(&query_params);
         }
-        full_endpoint.push_str(&query_params);
+
+        // 2. Gör anropet - matchar (u16, String)
+        let (status, body) = client.get(&endpoint)?;
+
+        // Om vi får 404 på första sidan hanterar vi det som "not found"
+        if status == 404 && current_page == 1 {
+            return handle_not_found(on_not_found);
+        }
+
+        // Om vi får 404 på efterföljande sidor betyder det bara att vi nått slutet
+        if status == 404 {
+            break;
+        }
+
+        // 3. Parsa produkterna
+        let page_products: Vec<Value> = serde_json::from_str(&body).map_err(|e| AppError {
+            code: ErrorCode::MalformedResponse,
+            message: format!("Misslyckades att parsa JSON: {}", e),
+        })?;
+
+        let fetched_count = page_products.len();
+        all_products.extend(page_products);
+
+        // 4. Logik för att fortsätta eller bryta
+        // Om vi fick färre än 100 produkter är vi garanterat klara.
+        if fetched_count < per_page as usize {
+            break;
+        }
+
+        // Om vi fick exakt 100, testa nästa sida
+        current_page += 1;
+
+        // Säkerhetsspärr för att inte loopa för evigt
+        if current_page > 20 { break; }
     }
 
-    // 3. Make the HTTP request to WooCommerce API
-    let (status, body) = client.get(&full_endpoint)?;
-
-    // Handle explicit 404 errors if the API returns them for empty searches
-    if status == 404 {
+    // 5. Hantera "Hittades ej"
+    if all_products.is_empty() {
         return handle_not_found(on_not_found);
     }
 
-    // 4. Parse the response body string into a JSON Value
-    let parsed_val: Value = serde_json::from_str(&body).map_err(|e| AppError {
-        code: ErrorCode::MalformedResponse,
-        message: format!("Failed to parse JSON response: {}", e),
-    })?;
-
-    // 5. Extract products array from the parsed response
-    let products = parsed_val.as_array().cloned().unwrap_or_default();
-
-    // 6. Handle "Not Found" logic for specific searches
-    // If the list is empty and the user was looking for something specific (like a SKU),
-    // we trigger the selected 'on_not_found' strategy.
-    if products.is_empty() && (input_data.get("sku").is_some() || input_data.get("search").is_some()) {
-        return handle_not_found(on_not_found);
-    }
-
-    // 7. Return the product list wrapped in an "items" object for schema consistency
-    Ok(json!({ "items": products }))
+    Ok(json!({ "items": all_products }))
 }
 
 /// Helper to handle "Not Found" scenarios
