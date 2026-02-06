@@ -39,49 +39,29 @@ pub fn execute(context: ActionContext) -> Result<Value, AppError> {
     let per_page = 100;
 
     loop {
-        // 1. Bygg URL för aktuell sida
         let mut endpoint = format!("/products?page={}&per_page={}", current_page, per_page);
         if !query_params.is_empty() {
             endpoint.push('&');
             endpoint.push_str(&query_params);
         }
 
-        // 2. Gör anropet - matchar (u16, String)
-        let (status, body) = client.get(&endpoint)?;
+        let (_status, body) = client.get(&endpoint)?;
 
-        // Om vi får 404 på första sidan hanterar vi det som "not found"
-        if status == 404 && current_page == 1 {
-            return handle_not_found(on_not_found);
-        }
-
-        // Om vi får 404 på efterföljande sidor betyder det bara att vi nått slutet
-        if status == 404 {
-            break;
-        }
-
-        // 3. Parsa produkterna
-        let page_products: Vec<Value> = serde_json::from_str(&body).map_err(|e| AppError {
-            code: ErrorCode::MalformedResponse,
-            message: format!("Misslyckades att parsa JSON: {}", e),
-        })?;
+        let page_products: Vec<Value> = match serde_json::from_str(&body) {
+            Ok(products) => products,
+            Err(_) => break,
+        };
 
         let fetched_count = page_products.len();
         all_products.extend(page_products);
 
-        // 4. Logik för att fortsätta eller bryta
-        // Om vi fick färre än 100 produkter är vi garanterat klara.
         if fetched_count < per_page as usize {
             break;
         }
 
-        // Om vi fick exakt 100, testa nästa sida
         current_page += 1;
-
-        // Säkerhetsspärr för att inte loopa för evigt
-        if current_page > 20 { break; }
     }
 
-    // 5. Hantera "Hittades ej"
     if all_products.is_empty() {
         return handle_not_found(on_not_found);
     }

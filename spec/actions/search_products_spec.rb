@@ -106,4 +106,22 @@ RSpec.describe 'actions.list_all_products' do
       }.to raise_error(AppBridge::CompleteParentException)
     end
   end
+
+  it 'paginates through multiple pages until all products are fetched' do
+
+    page1_products = Array.new(100) { |i| { 'id' => i, 'name' => "Product #{i}" } }
+
+    page2_products = Array.new(5) { |i| { 'id' => i + 100, 'name' => "Product #{i + 100}" } }
+
+    mock_server.mock_endpoint(:get, "/products?page=1&per_page=100&status=publish", page1_products)
+
+    mock_server.mock_endpoint(:get, "/products?page=2&per_page=100&status=publish", page2_products)
+
+    response = tester.execute_action('search_products', { 'status' => 'publish' })
+    data = JSON.parse(response.serialized_output)
+
+    expect(data['items'].length).to eq(105)
+    expect(data['items'].first['id']).to eq(0)
+    expect(data['items'].last['id']).to eq(104)
+  end
 end
