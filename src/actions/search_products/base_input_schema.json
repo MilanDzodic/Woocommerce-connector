@@ -54,7 +54,7 @@
       "oneOf": [
         {
           "const": "fail",
-          "title": "Fallera (Ge felmeddelande)"
+          "title": "Fallera"
         },
         {
           "const": "continue",
@@ -62,7 +62,7 @@
         },
         {
           "const": "exit_level",
-          "title": "Avsluta nivå (Hoppa ur loop/gren)"
+          "title": "Avsluta nivå"
         },
         {
           "const": "exit_execution",
