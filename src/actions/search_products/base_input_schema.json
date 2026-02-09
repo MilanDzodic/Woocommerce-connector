@@ -49,21 +49,26 @@
     "on_not_found": {
       "type": "string",
       "title": "Hantering vid saknad produkt",
-      "enum": ["fail", "continue", "exit_level", "exit_execution"],
       "default": "fail",
-      "description": "Bestämmer vad som ska hända om ingen produkt hittas (viktigt vid SKU-sökning)."
-    },
-    "page": {
-      "type": "integer",
-      "title": "Sida",
-      "default": 1,
-      "description": "Vilken sida av resultaten som ska hämtas."
-    },
-    "per_page": {
-      "type": "integer",
-      "title": "Antal per sida",
-      "default": 100,
-      "description": "Hur många produkter som ska hämtas per anrop (max 100)."
+      "description": "Bestämmer vad som ska hända om ingen produkt hittas (viktigt vid SKU-sökning).",
+      "oneOf": [
+        {
+          "const": "fail",
+          "title": "Fallera"
+        },
+        {
+          "const": "continue",
+          "title": "Fortsätt med tomt resultat"
+        },
+        {
+          "const": "exit_level",
+          "title": "Avsluta nivå"
+        },
+        {
+          "const": "exit_execution",
+          "title": "Avsluta hela körningen"
+        }
+      ]
     }
   }
 }

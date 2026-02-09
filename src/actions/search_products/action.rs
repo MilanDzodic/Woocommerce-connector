@@ -25,52 +25,48 @@ fn input_data(context: &ActionContext) -> Result<Value, AppError> {
 
 #[allow(dead_code)]
 pub fn execute(context: ActionContext) -> Result<Value, AppError> {
-  let client = client(&context)?;
-  let input_data = input_data(&context)?;
+    let client = client(&context)?;
+    let input_data = input_data(&context)?;
 
-  let on_not_found = input_data.get("on_not_found")
-    .and_then(|v| v.as_str())
-    .unwrap_or("fail");
+    let on_not_found = input_data.get("on_not_found")
+        .and_then(|v| v.as_str())
+        .unwrap_or("fail");
 
-  // 1. Build endpoint and query parameters
-  let endpoint = "/products".to_string();
-  let query_params = build_query_parameters(&input_data)?;
-  let full_endpoint = if query_params.is_empty() {
-    endpoint
-  } else {
-    format!("{}?{}", endpoint, query_params)
-  };
+    let query_params = build_query_parameters(&input_data)?;
 
-  // 2. Make the HTTP request
-  // We receive the status and body.
-  // Note: For full pagination support, we might need to look at response headers
-  // like 'X-WP-Total' and 'X-WP-TotalPages' in the future.
-  let (_status, body) = client.get(&full_endpoint)?;
+    let mut all_products = Vec::new();
+    let mut current_page = 1;
+    let per_page = 100;
 
-  // 3. Parse the body string into a serde_json::Value
-  let parsed_val: Value = serde_json::from_str(&body).map_err(|e| AppError {
-    code: ErrorCode::MalformedResponse,
-    message: format!("Failed to parse JSON response: {}", e),
-  })?;
+    loop {
+        let mut endpoint = format!("/products?page={}&per_page={}", current_page, per_page);
+        if !query_params.is_empty() {
+            endpoint.push('&');
+            endpoint.push_str(&query_params);
+        }
 
-  // 4. Extract products array
-  let products = parsed_val.as_array().cloned().unwrap_or_default();
+        let (_status, body) = client.get(&endpoint)?;
 
-  // 5. Handle SKU specific logic (Unique lookup)
-  // If a SKU is provided, we expect a result. If empty, we trigger the chosen strategy.
-  if input_data.get("sku").and_then(|v| v.as_str()).is_some() {
-    if products.is_empty() {
-      return handle_not_found(on_not_found);
+        let page_products: Vec<Value> = match serde_json::from_str(&body) {
+            Ok(products) => products,
+            Err(_) => break,
+        };
+
+        let fetched_count = page_products.len();
+        all_products.extend(page_products);
+
+        if fetched_count < per_page as usize {
+            break;
+        }
+
+        current_page += 1;
     }
 
-    // Even if SKU is unique, WooCommerce returns an array.
-    // We wrap it in "items" to keep the output schema consistent.
-    return Ok(json!({ "items": products }));
-  }
+    if all_products.is_empty() {
+        return handle_not_found(on_not_found);
+    }
 
-  // 6. Default: Return the product list wrapped in "items"
-  // For large datasets, the user should provide 'page' and 'per_page' in the input.
-  Ok(json!({ "items": products }))
+    Ok(json!({ "items": all_products }))
 }
 
 /// Helper to handle "Not Found" scenarios
@@ -96,18 +92,6 @@ fn handle_not_found(strategy: &str) -> Result<Value, AppError> {
 /// otherwise falls back to defaults (Feedback fix).
 fn build_query_parameters(input_data: &Value) -> Result<String, AppError> {
   let mut query_parts = Vec::new();
-
-  // 1. Handle Pagination with defaults
-  let page = input_data.get("page")
-    .and_then(|v| v.as_i64())
-    .unwrap_or(1);
-
-  let per_page = input_data.get("per_page")
-    .and_then(|v| v.as_i64())
-    .unwrap_or(100);
-
-  query_parts.push(format!("page={}", page));
-  query_parts.push(format!("per_page={}", per_page));
 
   // 2. Define other allowed filters
   let params = vec![
