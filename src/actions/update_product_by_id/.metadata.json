@@ -1,0 +1,6 @@
+{
+  "action_name": "update_product_by_id",
+  "method": "put",
+  "operation_id": "updateProductById",
+  "path": "/products/{productId}"
+}

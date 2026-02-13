@@ -1,0 +1,6 @@
+{
+  "action_name": "create_customer",
+  "method": "post",
+  "operation_id": "createCustomer",
+  "path": "/customers"
+}

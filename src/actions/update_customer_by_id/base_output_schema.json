@@ -1,0 +1,188 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "avatar_url": {
+      "description": "Avatar URL. read-only",
+      "type": "string"
+    },
+    "billing": {
+      "properties": {
+        "address_1": {
+          "description": "Address line 1",
+          "type": "string"
+        },
+        "address_2": {
+          "description": "Address line 2",
+          "type": "string"
+        },
+        "city": {
+          "description": "City name.",
+          "type": "string"
+        },
+        "company": {
+          "description": "Company name.",
+          "type": "string"
+        },
+        "country": {
+          "description": "Country code in ISO 3166-1 alpha-2 format.",
+          "type": "string"
+        },
+        "email": {
+          "description": "Email address.",
+          "type": "string"
+        },
+        "first_name": {
+          "description": "First name.",
+          "type": "string"
+        },
+        "last_name": {
+          "description": "Last name.",
+          "type": "string"
+        },
+        "phone": {
+          "description": "Phone number.",
+          "type": "string"
+        },
+        "postcode": {
+          "description": "Postal code.",
+          "type": "string"
+        },
+        "state": {
+          "description": "ISO code or name of the state, province or district.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "date_created": {
+      "description": "The date the customer was created, in the site's timezone. read-only",
+      "format": "date-time",
+      "type": "string"
+    },
+    "date_created_gmt": {
+      "description": "The date the customer was created, as GMT. read-only",
+      "format": "date-time",
+      "type": "string"
+    },
+    "date_modified": {
+      "description": "The date the customer was last modified, in the site's timezone. read-only",
+      "format": "date-time",
+      "type": "string"
+    },
+    "date_modified_gmt": {
+      "description": "The date the customer was last modified, as GMT. read-only",
+      "format": "date-time",
+      "type": "string"
+    },
+    "email": {
+      "description": "The email address for the customer. mandatory",
+      "type": "string"
+    },
+    "first_name": {
+      "description": "Customer first name.",
+      "type": "string"
+    },
+    "id": {
+      "description": "Unique identifier for the resource. read-only",
+      "type": "integer"
+    },
+    "is_paying_customer": {
+      "description": "Is the customer a paying customer? read-only",
+      "type": "boolean"
+    },
+    "last_name": {
+      "description": "Customer last name.",
+      "type": "string"
+    },
+    "meta_data": {
+      "description": "Meta data.",
+      "items": {
+        "properties": {
+          "display_key": {
+            "description": "Meta key for UI display.",
+            "type": "string"
+          },
+          "display_value": {
+            "description": "Meta value for UI display.",
+            "properties": {},
+            "type": "object"
+          },
+          "id": {
+            "description": "Meta ID.",
+            "type": "integer"
+          },
+          "key": {
+            "description": "Meta key.",
+            "type": "string"
+          },
+          "value": {
+            "description": "Meta value.",
+            "properties": {},
+            "type": "object"
+          }
+        },
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "password": {
+      "description": "Customer password. write-only",
+      "type": "string"
+    },
+    "role": {
+      "description": "Customer role. read-only",
+      "type": "string"
+    },
+    "shipping": {
+      "properties": {
+        "address_1": {
+          "description": "Address line 1",
+          "type": "string"
+        },
+        "address_2": {
+          "description": "Address line 2",
+          "type": "string"
+        },
+        "city": {
+          "description": "City name.",
+          "type": "string"
+        },
+        "company": {
+          "description": "Company name.",
+          "type": "string"
+        },
+        "country": {
+          "description": "ISO code of the country.",
+          "type": "string"
+        },
+        "first_name": {
+          "description": "First name.",
+          "type": "string"
+        },
+        "last_name": {
+          "description": "Last name.",
+          "type": "string"
+        },
+        "phone": {
+          "description": "Phone number.",
+          "type": "string"
+        },
+        "postcode": {
+          "description": "Postal code.",
+          "type": "string"
+        },
+        "state": {
+          "description": "ISO code or name of the state, province or district.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "username": {
+      "description": "Customer login name.",
+      "type": "string"
+    }
+  },
+  "type": "object"
+}

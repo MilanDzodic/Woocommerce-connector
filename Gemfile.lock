@@ -1,10 +1,10 @@
 GEM
   remote: https://rubygems.org/
   specs:
-    app_bridge (4.0.0)
+    app_bridge (4.1.1)
       rb_sys (~> 0.9.110)
-    app_bridge (4.0.0-arm64-darwin)
-    app_bridge (4.0.0-x86_64-linux)
+    app_bridge (4.1.1-arm64-darwin)
+    app_bridge (4.1.1-x86_64-linux)
     ast (2.4.3)
     benchmark-malloc (0.2.0)
     benchmark-perf (0.6.0)
@@ -80,7 +80,7 @@ PLATFORMS
   x86_64-linux
 
 DEPENDENCIES
-  app_bridge (= 4.0.0)
+  app_bridge (= 4.1.1)
   rspec (~> 3.12)
   rspec-benchmark (~> 0.6)
   rubocop (~> 1.50)

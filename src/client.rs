@@ -52,7 +52,56 @@ impl ApiClient {
       code: ErrorCode::Other,
       message: "Request failed".to_string(),
     })?;
-    
+
+    Ok((response.status, response.body))
+  }
+
+  pub fn post(&self, endpoint: &str, body: &serde_json::Value) -> Result<(u16, String), AppError> {
+    let url = format!("{}{}", self.base_url, endpoint);
+
+    let mut request_builder = RequestBuilder::new()
+      .method(Method::Post)
+      .url(&url);
+
+    for (key, value) in &self.headers {
+      request_builder = request_builder.header(key, value);
+    }
+
+    let body_str = serde_json::to_string(body).map_err(|e| AppError {
+      code: ErrorCode::Other,
+      message: format!("Kunde inte serialisera request body: {}", e),
+    })?;
+
+    request_builder = request_builder.body(&body_str);
+
+    let response = request_builder.send().map_err(|_err| AppError {
+      code: ErrorCode::Other,
+      message: "POST-anrop misslyckades".to_string(),
+    })?;
+
+    Ok((response.status, response.body))
+  }
+
+  pub fn put(&self, endpoint: &str, body: &serde_json::Value) -> Result<(u16, String), AppError> {
+    let url = format!("{}{}", self.base_url, endpoint);
+    let mut request_builder = RequestBuilder::new().method(Method::Put).url(&url);
+
+    for (key, value) in &self.headers {
+      request_builder = request_builder.header(key, value);
+    }
+
+    let body_str = serde_json::to_string(body).map_err(|e| AppError {
+      code: ErrorCode::Other,
+      message: format!("Kunde inte serialisera request body: {}", e),
+    })?;
+
+    request_builder = request_builder.body(&body_str);
+
+    let response = request_builder.send().map_err(|_err| AppError {
+      code: ErrorCode::Other,
+      message: "PUT-anrop misslyckades".to_string(),
+    })?;
+
     Ok((response.status, response.body))
   }
 }

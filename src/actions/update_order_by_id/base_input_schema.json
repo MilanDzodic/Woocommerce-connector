@@ -1,0 +1,1334 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "billing": {
+      "properties": {
+        "address_1": {
+          "description": "Address line 1",
+          "type": "string"
+        },
+        "address_2": {
+          "description": "Address line 2",
+          "type": "string"
+        },
+        "city": {
+          "description": "City name.",
+          "type": "string"
+        },
+        "company": {
+          "description": "Company name.",
+          "type": "string"
+        },
+        "country": {
+          "description": "Country code in ISO 3166-1 alpha-2 format.",
+          "type": "string"
+        },
+        "email": {
+          "description": "Email address.",
+          "type": "string"
+        },
+        "first_name": {
+          "description": "First name.",
+          "type": "string"
+        },
+        "last_name": {
+          "description": "Last name.",
+          "type": "string"
+        },
+        "phone": {
+          "description": "Phone number.",
+          "type": "string"
+        },
+        "postcode": {
+          "description": "Postal code.",
+          "type": "string"
+        },
+        "state": {
+          "description": "ISO code or name of the state, province or district.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "cart_hash": {
+      "description": "MD5 hash of cart items to ensure orders are not modified.",
+      "type": "string"
+    },
+    "cart_tax": {
+      "description": "Sum of line item taxes only.",
+      "type": "string"
+    },
+    "coupon_lines": {
+      "description": "Fee lines data.",
+      "items": {
+        "properties": {
+          "code": {
+            "description": "Coupon code.",
+            "type": "string"
+          },
+          "discount": {
+            "description": "Discount total.",
+            "type": "string"
+          },
+          "discount_tax": {
+            "description": "Discount total tax.",
+            "type": "string"
+          },
+          "id": {
+            "description": "Item ID.",
+            "type": "integer"
+          },
+          "meta_data": {
+            "description": "Meta data properties.",
+            "items": {
+              "properties": {
+                "display_key": {
+                  "description": "Meta key for UI display.",
+                  "type": "string"
+                },
+                "display_value": {
+                  "description": "Meta value for UI display.",
+                  "properties": {},
+                  "type": "object"
+                },
+                "id": {
+                  "description": "Meta ID.",
+                  "type": "integer"
+                },
+                "key": {
+                  "description": "Meta key.",
+                  "type": "string"
+                },
+                "value": {
+                  "description": "Meta value.",
+                  "properties": {},
+                  "type": "object"
+                }
+              },
+              "type": "object"
+            },
+            "type": "array"
+          }
+        }
+      },
+      "type": "array"
+    },
+    "created_via": {
+      "description": "Shows where the order was created.",
+      "type": "string"
+    },
+    "currency": {
+      "anyOf": [
+        {
+          "const": "AED"
+        },
+        {
+          "const": "AFN"
+        },
+        {
+          "const": "ALL"
+        },
+        {
+          "const": "AMD"
+        },
+        {
+          "const": "ANG"
+        },
+        {
+          "const": "AOA"
+        },
+        {
+          "const": "ARS"
+        },
+        {
+          "const": "AUD"
+        },
+        {
+          "const": "AWG"
+        },
+        {
+          "const": "AZN"
+        },
+        {
+          "const": "BAM"
+        },
+        {
+          "const": "BBD"
+        },
+        {
+          "const": "BDT"
+        },
+        {
+          "const": "BGN"
+        },
+        {
+          "const": "BHD"
+        },
+        {
+          "const": "BIF"
+        },
+        {
+          "const": "BMD"
+        },
+        {
+          "const": "BND"
+        },
+        {
+          "const": "BOB"
+        },
+        {
+          "const": "BRL"
+        },
+        {
+          "const": "BSD"
+        },
+        {
+          "const": "BTC"
+        },
+        {
+          "const": "BTN"
+        },
+        {
+          "const": "BWP"
+        },
+        {
+          "const": "BYR"
+        },
+        {
+          "const": "BYN"
+        },
+        {
+          "const": "BZD"
+        },
+        {
+          "const": "CAD"
+        },
+        {
+          "const": "CDF"
+        },
+        {
+          "const": "CHF"
+        },
+        {
+          "const": "CLP"
+        },
+        {
+          "const": "CNY"
+        },
+        {
+          "const": "COP"
+        },
+        {
+          "const": "CRC"
+        },
+        {
+          "const": "CUC"
+        },
+        {
+          "const": "CUP"
+        },
+        {
+          "const": "CVE"
+        },
+        {
+          "const": "CZK"
+        },
+        {
+          "const": "DJF"
+        },
+        {
+          "const": "DKK"
+        },
+        {
+          "const": "DOP"
+        },
+        {
+          "const": "DZD"
+        },
+        {
+          "const": "EGP"
+        },
+        {
+          "const": "ERN"
+        },
+        {
+          "const": "ETB"
+        },
+        {
+          "const": "EUR"
+        },
+        {
+          "const": "FJD"
+        },
+        {
+          "const": "FKP"
+        },
+        {
+          "const": "GBP"
+        },
+        {
+          "const": "GEL"
+        },
+        {
+          "const": "GGP"
+        },
+        {
+          "const": "GHS"
+        },
+        {
+          "const": "GIP"
+        },
+        {
+          "const": "GMD"
+        },
+        {
+          "const": "GNF"
+        },
+        {
+          "const": "GTQ"
+        },
+        {
+          "const": "GYD"
+        },
+        {
+          "const": "HKD"
+        },
+        {
+          "const": "HNL"
+        },
+        {
+          "const": "HRK"
+        },
+        {
+          "const": "HTG"
+        },
+        {
+          "const": "HUF"
+        },
+        {
+          "const": "IDR"
+        },
+        {
+          "const": "ILS"
+        },
+        {
+          "const": "IMP"
+        },
+        {
+          "const": "INR"
+        },
+        {
+          "const": "IQD"
+        },
+        {
+          "const": "IRR"
+        },
+        {
+          "const": "IRT"
+        },
+        {
+          "const": "ISK"
+        },
+        {
+          "const": "JEP"
+        },
+        {
+          "const": "JMD"
+        },
+        {
+          "const": "JOD"
+        },
+        {
+          "const": "JPY"
+        },
+        {
+          "const": "KES"
+        },
+        {
+          "const": "KGS"
+        },
+        {
+          "const": "KHR"
+        },
+        {
+          "const": "KMF"
+        },
+        {
+          "const": "KPW"
+        },
+        {
+          "const": "KRW"
+        },
+        {
+          "const": "KWD"
+        },
+        {
+          "const": "KYD"
+        },
+        {
+          "const": "KZT"
+        },
+        {
+          "const": "LAK"
+        },
+        {
+          "const": "LBP"
+        },
+        {
+          "const": "LKR"
+        },
+        {
+          "const": "LRD"
+        },
+        {
+          "const": "LSL"
+        },
+        {
+          "const": "LYD"
+        },
+        {
+          "const": "MAD"
+        },
+        {
+          "const": "MDL"
+        },
+        {
+          "const": "MGA"
+        },
+        {
+          "const": "MKD"
+        },
+        {
+          "const": "MMK"
+        },
+        {
+          "const": "MNT"
+        },
+        {
+          "const": "MOP"
+        },
+        {
+          "const": "MRU"
+        },
+        {
+          "const": "MUR"
+        },
+        {
+          "const": "MVR"
+        },
+        {
+          "const": "MWK"
+        },
+        {
+          "const": "MXN"
+        },
+        {
+          "const": "MYR"
+        },
+        {
+          "const": "MZN"
+        },
+        {
+          "const": "NAD"
+        },
+        {
+          "const": "NGN"
+        },
+        {
+          "const": "NIO"
+        },
+        {
+          "const": "NOK"
+        },
+        {
+          "const": "NPR"
+        },
+        {
+          "const": "NZD"
+        },
+        {
+          "const": "OMR"
+        },
+        {
+          "const": "PAB"
+        },
+        {
+          "const": "PEN"
+        },
+        {
+          "const": "PGK"
+        },
+        {
+          "const": "PHP"
+        },
+        {
+          "const": "PKR"
+        },
+        {
+          "const": "PLN"
+        },
+        {
+          "const": "PRB"
+        },
+        {
+          "const": "PYG"
+        },
+        {
+          "const": "QAR"
+        },
+        {
+          "const": "RON"
+        },
+        {
+          "const": "RSD"
+        },
+        {
+          "const": "RUB"
+        },
+        {
+          "const": "RWF"
+        },
+        {
+          "const": "SAR"
+        },
+        {
+          "const": "SBD"
+        },
+        {
+          "const": "SCR"
+        },
+        {
+          "const": "SDG"
+        },
+        {
+          "const": "SEK"
+        },
+        {
+          "const": "SGD"
+        },
+        {
+          "const": "SHP"
+        },
+        {
+          "const": "SLL"
+        },
+        {
+          "const": "SOS"
+        },
+        {
+          "const": "SRD"
+        },
+        {
+          "const": "SSP"
+        },
+        {
+          "const": "STN"
+        },
+        {
+          "const": "SYP"
+        },
+        {
+          "const": "SZL"
+        },
+        {
+          "const": "THB"
+        },
+        {
+          "const": "TJS"
+        },
+        {
+          "const": "TMT"
+        },
+        {
+          "const": "TND"
+        },
+        {
+          "const": "TOP"
+        },
+        {
+          "const": "TRY"
+        },
+        {
+          "const": "TTD"
+        },
+        {
+          "const": "TWD"
+        },
+        {
+          "const": "TZS"
+        },
+        {
+          "const": "UAH"
+        },
+        {
+          "const": "UGX"
+        },
+        {
+          "const": "USD"
+        },
+        {
+          "const": "UYU"
+        },
+        {
+          "const": "UZS"
+        },
+        {
+          "const": "VEF"
+        },
+        {
+          "const": "VES"
+        },
+        {
+          "const": "VND"
+        },
+        {
+          "const": "VUV"
+        },
+        {
+          "const": "WST"
+        },
+        {
+          "const": "XAF"
+        },
+        {
+          "const": "XCD"
+        },
+        {
+          "const": "XOF"
+        },
+        {
+          "const": "XPF"
+        },
+        {
+          "const": "YER"
+        },
+        {
+          "const": "ZAR"
+        },
+        {
+          "const": "ZMW"
+        }
+      ],
+      "description": "Currency the order was created with, in ISO format.",
+      "type": "string"
+    },
+    "customer_id": {
+      "description": "User ID who owns the order. 0 for guests.",
+      "type": "integer"
+    },
+    "customer_ip_address": {
+      "description": "Customer's IP address.",
+      "type": "string"
+    },
+    "customer_note": {
+      "description": "Note left by customer during checkout.",
+      "type": "string"
+    },
+    "customer_user_agent": {
+      "description": "User agent of the customer.",
+      "type": "string"
+    },
+    "date_completed": {
+      "description": "The date the order was completed, in the site's timezone.",
+      "format": "date-time",
+      "type": "string"
+    },
+    "date_completed_gmt": {
+      "description": "The date the order was completed, as GMT.",
+      "format": "date-time",
+      "type": "string"
+    },
+    "date_created": {
+      "description": "The date the order was created, in the site's timezone.",
+      "format": "date-time",
+      "type": "string"
+    },
+    "date_created_gmt": {
+      "description": "The date the order was created, as GMT.",
+      "format": "date-time",
+      "type": "string"
+    },
+    "date_modified": {
+      "description": "The date the order was last modified, in the site's timezone.",
+      "format": "date-time",
+      "type": "string"
+    },
+    "date_modified_gmt": {
+      "description": "The date the order was last modified, as GMT.",
+      "format": "date-time",
+      "type": "string"
+    },
+    "date_paid": {
+      "description": "The date the order was paid, in the site's timezone.",
+      "format": "date-time",
+      "type": "string"
+    },
+    "date_paid_gmt": {
+      "description": "The date the order was paid, as GMT.",
+      "format": "date-time",
+      "type": "string"
+    },
+    "discount_tax": {
+      "description": "Total discount tax amount for the order.",
+      "type": "string"
+    },
+    "discount_total": {
+      "description": "Total discount amount for the order.",
+      "type": "string"
+    },
+    "fee_lines": {
+      "description": "Fee lines data.",
+      "items": {
+        "properties": {
+          "id": {
+            "description": "Item ID.",
+            "type": "integer"
+          },
+          "meta_data": {
+            "description": "Meta data properties.",
+            "items": {
+              "properties": {
+                "display_key": {
+                  "description": "Meta key for UI display.",
+                  "type": "string"
+                },
+                "display_value": {
+                  "description": "Meta value for UI display.",
+                  "properties": {},
+                  "type": "object"
+                },
+                "id": {
+                  "description": "Meta ID.",
+                  "type": "integer"
+                },
+                "key": {
+                  "description": "Meta key.",
+                  "type": "string"
+                },
+                "value": {
+                  "description": "Meta value.",
+                  "properties": {},
+                  "type": "object"
+                }
+              },
+              "type": "object"
+            },
+            "type": "array"
+          },
+          "name": {
+            "description": "Fee name.",
+            "type": "string"
+          },
+          "tax_class": {
+            "description": "Tax class of fee.",
+            "type": "string"
+          },
+          "tax_status": {
+            "description": "Tax status of fee. Options taxable and none.",
+            "type": "string"
+          },
+          "taxes": {
+            "description": "Line taxes.",
+            "items": {
+              "properties": {
+                "compound": {
+                  "description": "Whether or not this is a compound tax rate.",
+                  "type": "boolean"
+                },
+                "id": {
+                  "description": "Item ID.",
+                  "type": "integer"
+                },
+                "label": {
+                  "description": "Tax rate label.",
+                  "type": "string"
+                },
+                "meta_data": {
+                  "description": "Meta data properties.",
+                  "items": {
+                    "properties": {
+                      "display_key": {
+                        "description": "Meta key for UI display.",
+                        "type": "string"
+                      },
+                      "display_value": {
+                        "description": "Meta value for UI display.",
+                        "properties": {},
+                        "type": "object"
+                      },
+                      "id": {
+                        "description": "Meta ID.",
+                        "type": "integer"
+                      },
+                      "key": {
+                        "description": "Meta key.",
+                        "type": "string"
+                      },
+                      "value": {
+                        "description": "Meta value.",
+                        "properties": {},
+                        "type": "object"
+                      }
+                    },
+                    "type": "object"
+                  },
+                  "type": "array"
+                },
+                "rate_code": {
+                  "description": "Tax rate code.",
+                  "type": "string"
+                },
+                "rate_id": {
+                  "description": "Tax rate ID.",
+                  "type": "string"
+                },
+                "shipping_tax_total": {
+                  "description": "Shipping tax total.",
+                  "type": "string"
+                },
+                "tax_total": {
+                  "description": "Tax total (not including shipping taxes).",
+                  "type": "string"
+                }
+              },
+              "type": "object"
+            },
+            "type": "array"
+          },
+          "total": {
+            "description": "Line total (after discounts).",
+            "type": "string"
+          },
+          "total_tax": {
+            "description": "Line total tax (after discounts).",
+            "type": "string"
+          }
+        }
+      },
+      "type": "array"
+    },
+    "id": {
+      "description": "Unique identifier for the resource.",
+      "type": "integer"
+    },
+    "line_items": {
+      "description": "Line items data.",
+      "items": {
+        "properties": {
+          "id": {
+            "description": "Item ID.",
+            "type": "integer"
+          },
+          "meta_data": {
+            "description": "Meta data properties.",
+            "items": {
+              "properties": {
+                "display_key": {
+                  "description": "Meta key for UI display.",
+                  "type": "string"
+                },
+                "display_value": {
+                  "description": "Meta value for UI display.",
+                  "properties": {},
+                  "type": "object"
+                },
+                "id": {
+                  "description": "Meta ID.",
+                  "type": "integer"
+                },
+                "key": {
+                  "description": "Meta key.",
+                  "type": "string"
+                },
+                "value": {
+                  "description": "Meta value.",
+                  "properties": {},
+                  "type": "object"
+                }
+              },
+              "type": "object"
+            },
+            "type": "array"
+          },
+          "name": {
+            "description": "Product name.",
+            "type": "string"
+          },
+          "parent_name": {
+            "description": "Parent product name if the product is a variation.",
+            "type": "string"
+          },
+          "price": {
+            "description": "Product price.",
+            "type": "number"
+          },
+          "product_id": {
+            "description": "Product ID.",
+            "type": "integer"
+          },
+          "quantity": {
+            "description": "Quantity ordered.",
+            "type": "integer"
+          },
+          "sku": {
+            "description": "Product SKU.",
+            "type": "string"
+          },
+          "subtotal": {
+            "description": "Line subtotal (before discounts).",
+            "type": "string"
+          },
+          "subtotal_tax": {
+            "description": "Line subtotal tax (before discounts).",
+            "type": "string"
+          },
+          "tax_class": {
+            "description": "Tax class of product.",
+            "type": "string"
+          },
+          "taxes": {
+            "description": "Line taxes.",
+            "items": {
+              "properties": {
+                "compound": {
+                  "description": "Whether or not this is a compound tax rate.",
+                  "type": "boolean"
+                },
+                "id": {
+                  "description": "Item ID.",
+                  "type": "integer"
+                },
+                "label": {
+                  "description": "Tax rate label.",
+                  "type": "string"
+                },
+                "meta_data": {
+                  "description": "Meta data properties.",
+                  "items": {
+                    "properties": {
+                      "display_key": {
+                        "description": "Meta key for UI display.",
+                        "type": "string"
+                      },
+                      "display_value": {
+                        "description": "Meta value for UI display.",
+                        "properties": {},
+                        "type": "object"
+                      },
+                      "id": {
+                        "description": "Meta ID.",
+                        "type": "integer"
+                      },
+                      "key": {
+                        "description": "Meta key.",
+                        "type": "string"
+                      },
+                      "value": {
+                        "description": "Meta value.",
+                        "properties": {},
+                        "type": "object"
+                      }
+                    },
+                    "type": "object"
+                  },
+                  "type": "array"
+                },
+                "rate_code": {
+                  "description": "Tax rate code.",
+                  "type": "string"
+                },
+                "rate_id": {
+                  "description": "Tax rate ID.",
+                  "type": "string"
+                },
+                "shipping_tax_total": {
+                  "description": "Shipping tax total.",
+                  "type": "string"
+                },
+                "tax_total": {
+                  "description": "Tax total (not including shipping taxes).",
+                  "type": "string"
+                }
+              },
+              "type": "object"
+            },
+            "type": "array"
+          },
+          "total": {
+            "description": "Line total (after discounts).",
+            "type": "string"
+          },
+          "total_tax": {
+            "description": "Line total tax (after discounts).",
+            "type": "string"
+          },
+          "variation_id": {
+            "description": "Variation ID, if applicable.",
+            "type": "integer"
+          }
+        },
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "meta_data": {
+      "description": "Meta data properties.",
+      "items": {
+        "properties": {
+          "display_key": {
+            "description": "Meta key for UI display.",
+            "type": "string"
+          },
+          "display_value": {
+            "description": "Meta value for UI display.",
+            "properties": {},
+            "type": "object"
+          },
+          "id": {
+            "description": "Meta ID.",
+            "type": "integer"
+          },
+          "key": {
+            "description": "Meta key.",
+            "type": "string"
+          },
+          "value": {
+            "description": "Meta value.",
+            "properties": {},
+            "type": "object"
+          }
+        },
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "number": {
+      "description": "Order number.",
+      "type": "string"
+    },
+    "orderId": {
+      "type": "integer"
+    },
+    "order_key": {
+      "description": "Order key.",
+      "type": "string"
+    },
+    "parent_id": {
+      "description": "Parent order ID.",
+      "type": "integer"
+    },
+    "payment_method": {
+      "description": "Payment method ID.",
+      "type": "string"
+    },
+    "payment_method_title": {
+      "description": "Payment method title.",
+      "type": "string"
+    },
+    "prices_include_tax": {
+      "description": "True the prices included tax during checkout.",
+      "type": "boolean"
+    },
+    "refunds": {
+      "description": "List of refunds.",
+      "items": {
+        "properties": {
+          "id": {
+            "description": "Refund ID.",
+            "type": "integer"
+          },
+          "reason": {
+            "description": "Refund reason.",
+            "type": "string"
+          },
+          "total": {
+            "description": "Refund total.",
+            "type": "string"
+          }
+        }
+      },
+      "type": "array"
+    },
+    "set_paid": {
+      "description": "Define if the order is paid. It will set the status to processing and reduce stock items.",
+      "type": "boolean"
+    },
+    "shipping": {
+      "properties": {
+        "address_1": {
+          "description": "Address line 1",
+          "type": "string"
+        },
+        "address_2": {
+          "description": "Address line 2",
+          "type": "string"
+        },
+        "city": {
+          "description": "City name.",
+          "type": "string"
+        },
+        "company": {
+          "description": "Company name.",
+          "type": "string"
+        },
+        "country": {
+          "description": "ISO code of the country.",
+          "type": "string"
+        },
+        "first_name": {
+          "description": "First name.",
+          "type": "string"
+        },
+        "last_name": {
+          "description": "Last name.",
+          "type": "string"
+        },
+        "phone": {
+          "description": "Phone number.",
+          "type": "string"
+        },
+        "postcode": {
+          "description": "Postal code.",
+          "type": "string"
+        },
+        "state": {
+          "description": "ISO code or name of the state, province or district.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "shipping_lines": {
+      "description": "Shipping lines data.",
+      "items": {
+        "properties": {
+          "id": {
+            "description": "Item ID.",
+            "type": "integer"
+          },
+          "instance_id": {
+            "description": "Shipping instance ID.",
+            "type": "string"
+          },
+          "meta_data": {
+            "description": "Meta data properties.",
+            "items": {
+              "properties": {
+                "display_key": {
+                  "description": "Meta key for UI display.",
+                  "type": "string"
+                },
+                "display_value": {
+                  "description": "Meta value for UI display.",
+                  "properties": {},
+                  "type": "object"
+                },
+                "id": {
+                  "description": "Meta ID.",
+                  "type": "integer"
+                },
+                "key": {
+                  "description": "Meta key.",
+                  "type": "string"
+                },
+                "value": {
+                  "description": "Meta value.",
+                  "properties": {},
+                  "type": "object"
+                }
+              },
+              "type": "object"
+            },
+            "type": "array"
+          },
+          "method_id": {
+            "description": "Shipping method ID.",
+            "type": "string"
+          },
+          "method_title": {
+            "description": "Shipping method name.",
+            "type": "string"
+          },
+          "taxes": {
+            "description": "Line taxes.",
+            "items": {
+              "properties": {
+                "compound": {
+                  "description": "Whether or not this is a compound tax rate.",
+                  "type": "boolean"
+                },
+                "id": {
+                  "description": "Item ID.",
+                  "type": "integer"
+                },
+                "label": {
+                  "description": "Tax rate label.",
+                  "type": "string"
+                },
+                "meta_data": {
+                  "description": "Meta data properties.",
+                  "items": {
+                    "properties": {
+                      "display_key": {
+                        "description": "Meta key for UI display.",
+                        "type": "string"
+                      },
+                      "display_value": {
+                        "description": "Meta value for UI display.",
+                        "properties": {},
+                        "type": "object"
+                      },
+                      "id": {
+                        "description": "Meta ID.",
+                        "type": "integer"
+                      },
+                      "key": {
+                        "description": "Meta key.",
+                        "type": "string"
+                      },
+                      "value": {
+                        "description": "Meta value.",
+                        "properties": {},
+                        "type": "object"
+                      }
+                    },
+                    "type": "object"
+                  },
+                  "type": "array"
+                },
+                "rate_code": {
+                  "description": "Tax rate code.",
+                  "type": "string"
+                },
+                "rate_id": {
+                  "description": "Tax rate ID.",
+                  "type": "string"
+                },
+                "shipping_tax_total": {
+                  "description": "Shipping tax total.",
+                  "type": "string"
+                },
+                "tax_total": {
+                  "description": "Tax total (not including shipping taxes).",
+                  "type": "string"
+                }
+              },
+              "type": "object"
+            },
+            "type": "array"
+          },
+          "total": {
+            "description": "Line total (after discounts).",
+            "type": "string"
+          },
+          "total_tax": {
+            "description": "Line total tax (after discounts).",
+            "type": "string"
+          }
+        }
+      },
+      "type": "array"
+    },
+    "shipping_tax": {
+      "description": "Total shipping tax amount for the order.",
+      "type": "string"
+    },
+    "shipping_total": {
+      "description": "Total shipping amount for the order.",
+      "type": "string"
+    },
+    "status": {
+      "description": "Order status. Options - pending, processing, on-hold, completed, cancelled, refunded, failed, trash and checkout-draft. Default is pending.",
+      "type": "string"
+    },
+    "tax_lines": {
+      "description": "Tax lines data.",
+      "items": {
+        "properties": {
+          "compound": {
+            "description": "Whether or not this is a compound tax rate.",
+            "type": "boolean"
+          },
+          "id": {
+            "description": "Item ID.",
+            "type": "integer"
+          },
+          "label": {
+            "description": "Tax rate label.",
+            "type": "string"
+          },
+          "meta_data": {
+            "description": "Meta data properties.",
+            "items": {
+              "properties": {
+                "display_key": {
+                  "description": "Meta key for UI display.",
+                  "type": "string"
+                },
+                "display_value": {
+                  "description": "Meta value for UI display.",
+                  "properties": {},
+                  "type": "object"
+                },
+                "id": {
+                  "description": "Meta ID.",
+                  "type": "integer"
+                },
+                "key": {
+                  "description": "Meta key.",
+                  "type": "string"
+                },
+                "value": {
+                  "description": "Meta value.",
+                  "properties": {},
+                  "type": "object"
+                }
+              },
+              "type": "object"
+            },
+            "type": "array"
+          },
+          "rate_code": {
+            "description": "Tax rate code.",
+            "type": "string"
+          },
+          "rate_id": {
+            "description": "Tax rate ID.",
+            "type": "string"
+          },
+          "shipping_tax_total": {
+            "description": "Shipping tax total.",
+            "type": "string"
+          },
+          "tax_total": {
+            "description": "Tax total (not including shipping taxes).",
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "total": {
+      "description": "Grand total.",
+      "type": "string"
+    },
+    "total_tax": {
+      "description": "Sum of all taxes.",
+      "type": "string"
+    },
+    "transaction_id": {
+      "description": "Unique transaction ID.",
+      "type": "string"
+    },
+    "version": {
+      "description": "Version of WooCommerce which last updated the order.",
+      "type": "string"
+    }
+  },
+  "required": [
+    "orderId"
+  ],
+  "type": "object"
+}
