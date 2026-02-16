@@ -26,39 +26,35 @@ fn input_data(context: &ActionContext) -> Result<Value, AppError> {
 /// Execute the action
 #[allow(dead_code)]
 pub fn execute(context: ActionContext) -> Result<Value, AppError> {
-    let client = client(&context)?;
-    let input_data = input_data(&context)?;
+  let client = client(&context)?;
+  let input_data = input_data(&context)?;
 
-    // Prepare request body
-    let request_body = request_body_without_empty_values(&input_data, &[])?;
+  let request_body = request_body_without_empty_values(&input_data, &[])?;
 
+  let endpoint = "/customers";
+  let (status, response_body) = client.post(endpoint, &request_body).map_err(|e| AppError {
+    code: ErrorCode::Other,
+    message: format!(
+      "POST request failed - URL: {}{}, Error: {}",
+      client.base_url,
+      endpoint,
+      e.message
+    ),
+  })?;
 
-    // Make HTTP request
-    let endpoint = "/customers";
-    let (status, response_body) = client.post(endpoint, &request_body).map_err(|e| AppError {
+  if status >= 400 {
+    return Err(AppError {
       code: ErrorCode::Other,
-      message: format!(
-        "POST request failed - URL: {}{}, Body: {}, Error: {}",
-        client.base_url,
-        endpoint,
-        serde_json::to_string(&request_body).unwrap_or_else(|_| "Failed to serialize".to_string()),
-        e.message
-      ),
-    })?;
+      message: format!("WooCommerce returnerade felkod {}: {}", status, response_body),
+    });
+  }
 
-    if status >= 400 {
-      return Err(AppError {
-        code: ErrorCode::Other,
-        message: format!("WooCommerce returnerade felkod {}: {}", status, response_body),
-      });
-    }
+  let response_json: Value = serde_json::from_str(&response_body).map_err(|e| AppError {
+    code: ErrorCode::MalformedResponse,
+    message: format!("Misslyckades att tolka JSON-svar: {}", e),
+  })?;
 
-    let response_json: Value = serde_json::from_str(&response_body).map_err(|e| AppError {
-      code: ErrorCode::MalformedResponse,
-      message: format!("Misslyckades att tolka JSON-svar: {}", e),
-    })?;
-
-    Ok(response_json)
+  Ok(response_json)
 }
 
 /// Get the input schema for this action
