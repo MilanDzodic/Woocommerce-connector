@@ -3,30 +3,22 @@
   "additionalProperties": false,
   "type": "object",
   "properties": {
-    "avatar_url": {
-      "type": "string",
-      "title": "Avatar-URL"
-    },
-    "billing": {
-      "type": "object",
-      "title": "Faktureringsuppgifter",
-      "properties": {
-        "address_1": { "type": "string", "title": "Adressrad 1" },
-        "address_2": { "type": "string", "title": "Adressrad 2" },
-        "city": { "type": "string", "title": "Stad" },
-        "company": { "type": "string", "title": "Företag" },
-        "country": { "type": "string", "title": "Land (ISO-kod)" },
-        "email": { "type": "string", "title": "E-post" },
-        "first_name": { "type": "string", "title": "Förnamn" },
-        "last_name": { "type": "string", "title": "Efternamn" },
-        "phone": { "type": "string", "title": "Telefon" },
-        "postcode": { "type": "string", "title": "Postnummer" },
-        "state": { "type": "string", "title": "Delstat/Län" }
-      }
+    "id": {
+      "type": "integer",
+      "title": "Kund-ID (för uppdatering)",
+      "description": "Lämna tomt för att skapa en ny kund. Ange ID för att uppdatera en befintlig."
     },
     "email": {
       "type": "string",
       "title": "E-postadress"
+    },
+    "username": {
+      "type": "string",
+      "title": "Användarnamn"
+    },
+    "password": {
+      "type": "string",
+      "title": "Lösenord"
     },
     "first_name": {
       "type": "string",
@@ -36,33 +28,47 @@
       "type": "string",
       "title": "Efternamn"
     },
-    "password": {
-      "type": "string",
-      "title": "Lösenord"
-    },
     "role": {
       "type": "string",
-      "title": "Roll"
+      "title": "Roll",
+      "description": "Exempel: customer, subscriber, etc."
+    },
+    "billing": {
+      "type": "object",
+      "title": "Faktureringsuppgifter",
+      "properties": {
+        "first_name": { "type": "string", "title": "Förnamn" },
+        "last_name": { "type": "string", "title": "Efternamn" },
+        "company": { "type": "string", "title": "Företag" },
+        "address_1": { "type": "string", "title": "Adressrad 1" },
+        "address_2": { "type": "string", "title": "Adressrad 2" },
+        "city": { "type": "string", "title": "Stad" },
+        "state": { "type": "string", "title": "Delstat/Län" },
+        "postcode": { "type": "string", "title": "Postnummer" },
+        "country": { "type": "string", "title": "Land (ISO-kod)" },
+        "email": { "type": "string", "title": "E-post" },
+        "phone": { "type": "string", "title": "Telefon" }
+      }
     },
     "shipping": {
       "type": "object",
       "title": "Leveransuppgifter",
       "properties": {
+        "first_name": { "type": "string", "title": "Förnamn" },
+        "last_name": { "type": "string", "title": "Efternamn" },
+        "company": { "type": "string", "title": "Företag" },
         "address_1": { "type": "string", "title": "Adressrad 1" },
         "address_2": { "type": "string", "title": "Adressrad 2" },
         "city": { "type": "string", "title": "Stad" },
-        "company": { "type": "string", "title": "Företag" },
-        "country": { "type": "string", "title": "Land (ISO-kod)" },
-        "first_name": { "type": "string", "title": "Förnamn" },
-        "last_name": { "type": "string", "title": "Efternamn" },
-        "phone": { "type": "string", "title": "Telefon" },
+        "state": { "type": "string", "title": "Delstat/Län" },
         "postcode": { "type": "string", "title": "Postnummer" },
-        "state": { "type": "string", "title": "Delstat/Län" }
+        "country": { "type": "string", "title": "Land (ISO-kod)" },
+        "phone": { "type": "string", "title": "Telefon" }
       }
     },
-    "username": {
+    "avatar_url": {
       "type": "string",
-      "title": "Användarnamn"
+      "title": "Avatar-URL"
     }
   },
   "required": []

@@ -112,4 +112,28 @@ RSpec.describe 'actions.retrieve_customer_by_id' do
       })
     }.to raise_error(AppBridge::OtherError, /Customer not found \(404\)/)
   end
+
+  it 'returns a customer when a valid ID is provided' do
+    input = { 'customerId' => 456 }
+
+    mock_server.mock_endpoint(:get, '/customers/456', {
+      'id' => 456,
+      'email' => 'kalle@kula.se'
+    }, status: 200)
+
+    response = tester.execute_action('retrieve_customer_by_id', input)
+    data = JSON.parse(response.serialized_output)
+
+    expect(data['id']).to eq(456)
+    expect(data['email']).to eq('kalle@kula.se')
+  end
+
+  it 'raises an error when customer is not found' do
+    input = { 'customerId' => 999 }
+    mock_server.mock_endpoint(:get, '/customers/999', { 'message' => 'Not found' }.to_json, status: 404)
+
+    expect {
+      tester.execute_action('retrieve_customer_by_id', input)
+    }.to raise_error(AppBridge::OtherError, /404/)
+  end
 end
