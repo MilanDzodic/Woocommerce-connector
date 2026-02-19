@@ -29,17 +29,19 @@ pub fn execute(context: ActionContext) -> Result<Value, AppError> {
   let client = client(&context)?;
   let input_data = input_data(&context)?;
 
-  let request_body = request_body_without_empty_values(&input_data, &[])?;
+  let id = input_data.get("id").and_then(|v| v.as_i64());
 
-  let endpoint = "/customers";
-  let (status, response_body) = client.post(endpoint, &request_body).map_err(|e| AppError {
+  let request_body = request_body_without_empty_values(&input_data, &["id"])?;
+
+  let (status, response_body) = if let Some(customer_id) = id {
+    let endpoint = format!("/customers/{}", customer_id);
+    client.put(&endpoint, &request_body)
+  } else {
+    let endpoint = "/customers";
+    client.post(endpoint, &request_body)
+  }.map_err(|e| AppError {
     code: ErrorCode::Other,
-    message: format!(
-      "POST request failed - URL: {}{}, Error: {}",
-      client.base_url,
-      endpoint,
-      e.message
-    ),
+    message: format!("API-anrop misslyckades: {}", e.message),
   })?;
 
   if status >= 400 {
