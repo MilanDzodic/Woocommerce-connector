@@ -1,194 +1,117 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "additionalProperties": false,
-  "properties": {
-    "avatar_url": {
-      "description": "Avatar URL. read-only",
-      "type": "string"
-    },
-    "billing": {
-      "properties": {
-        "address_1": {
-          "description": "Address line 1",
-          "type": "string"
-        },
-        "address_2": {
-          "description": "Address line 2",
-          "type": "string"
-        },
-        "city": {
-          "description": "City name.",
-          "type": "string"
-        },
-        "company": {
-          "description": "Company name.",
-          "type": "string"
-        },
-        "country": {
-          "description": "Country code in ISO 3166-1 alpha-2 format.",
-          "type": "string"
-        },
-        "email": {
-          "description": "Email address.",
-          "type": "string"
-        },
-        "first_name": {
-          "description": "First name.",
-          "type": "string"
-        },
-        "last_name": {
-          "description": "Last name.",
-          "type": "string"
-        },
-        "phone": {
-          "description": "Phone number.",
-          "type": "string"
-        },
-        "postcode": {
-          "description": "Postal code.",
-          "type": "string"
-        },
-        "state": {
-          "description": "ISO code or name of the state, province or district.",
-          "type": "string"
-        }
-      },
-      "type": "object"
-    },
-    "customerId": {
-      "type": "integer"
-    },
-    "date_created": {
-      "description": "The date the customer was created, in the site's timezone. read-only",
-      "format": "date-time",
-      "type": "string"
-    },
-    "date_created_gmt": {
-      "description": "The date the customer was created, as GMT. read-only",
-      "format": "date-time",
-      "type": "string"
-    },
-    "date_modified": {
-      "description": "The date the customer was last modified, in the site's timezone. read-only",
-      "format": "date-time",
-      "type": "string"
-    },
-    "date_modified_gmt": {
-      "description": "The date the customer was last modified, as GMT. read-only",
-      "format": "date-time",
-      "type": "string"
-    },
-    "email": {
-      "description": "The email address for the customer. mandatory",
-      "type": "string"
-    },
-    "first_name": {
-      "description": "Customer first name.",
-      "type": "string"
-    },
-    "id": {
-      "description": "Unique identifier for the resource. read-only",
-      "type": "integer"
-    },
-    "is_paying_customer": {
-      "description": "Is the customer a paying customer? read-only",
-      "type": "boolean"
-    },
-    "last_name": {
-      "description": "Customer last name.",
-      "type": "string"
-    },
-    "meta_data": {
-      "description": "Meta data.",
-      "items": {
-        "properties": {
-          "display_key": {
-            "description": "Meta key for UI display.",
-            "type": "string"
-          },
-          "display_value": {
-            "description": "Meta value for UI display.",
-            "properties": {},
-            "type": "object"
-          },
-          "id": {
-            "description": "Meta ID.",
-            "type": "integer"
-          },
-          "key": {
-            "description": "Meta key.",
-            "type": "string"
-          },
-          "value": {
-            "description": "Meta value.",
-            "properties": {},
-            "type": "object"
-          }
-        },
-        "type": "object"
-      },
-      "type": "array"
-    },
-    "password": {
-      "description": "Customer password. write-only",
-      "type": "string"
-    },
-    "role": {
-      "description": "Customer role. read-only",
-      "type": "string"
-    },
-    "shipping": {
-      "properties": {
-        "address_1": {
-          "description": "Address line 1",
-          "type": "string"
-        },
-        "address_2": {
-          "description": "Address line 2",
-          "type": "string"
-        },
-        "city": {
-          "description": "City name.",
-          "type": "string"
-        },
-        "company": {
-          "description": "Company name.",
-          "type": "string"
-        },
-        "country": {
-          "description": "ISO code of the country.",
-          "type": "string"
-        },
-        "first_name": {
-          "description": "First name.",
-          "type": "string"
-        },
-        "last_name": {
-          "description": "Last name.",
-          "type": "string"
-        },
-        "phone": {
-          "description": "Phone number.",
-          "type": "string"
-        },
-        "postcode": {
-          "description": "Postal code.",
-          "type": "string"
-        },
-        "state": {
-          "description": "ISO code or name of the state, province or district.",
-          "type": "string"
-        }
-      },
-      "type": "object"
-    },
-    "username": {
-      "description": "Customer login name.",
-      "type": "string"
-    }
-  },
+  "type": "object",
   "required": [
     "customerId"
   ],
-  "type": "object"
+  "properties": {
+    "customerId": {
+      "type": "integer",
+      "title": "Kund-ID"
+    },
+    "id": {
+      "type": "integer",
+      "title": "ID"
+    },
+    "username": {
+      "type": "string",
+      "title": "Användarnamn"
+    },
+    "email": {
+      "type": "string",
+      "title": "E-postadress"
+    },
+    "first_name": {
+      "type": "string",
+      "title": "Förnamn"
+    },
+    "last_name": {
+      "type": "string",
+      "title": "Efternamn"
+    },
+    "role": {
+      "type": "string",
+      "title": "Roll"
+    },
+    "password": {
+      "type": "string",
+      "title": "Lösenord"
+    },
+    "date_created": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Skapad datum"
+    },
+    "date_created_gmt": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Skapad datum (GMT)"
+    },
+    "date_modified": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Ändrad datum"
+    },
+    "date_modified_gmt": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Ändrad datum (GMT)"
+    },
+    "is_paying_customer": {
+      "type": "boolean",
+      "title": "Är betalande kund"
+    },
+    "avatar_url": {
+      "type": "string",
+      "title": "Avatar-URL"
+    },
+    "billing": {
+      "type": "object",
+      "title": "Faktureringsuppgifter",
+      "properties": {
+        "first_name": { "type": "string", "title": "Förnamn" },
+        "last_name": { "type": "string", "title": "Efternamn" },
+        "company": { "type": "string", "title": "Företag" },
+        "address_1": { "type": "string", "title": "Adressrad 1" },
+        "address_2": { "type": "string", "title": "Adressrad 2" },
+        "city": { "type": "string", "title": "Stad" },
+        "state": { "type": "string", "title": "Delstat/Län" },
+        "postcode": { "type": "string", "title": "Postnummer" },
+        "country": { "type": "string", "title": "Land (ISO-kod)" },
+        "email": { "type": "string", "title": "E-post" },
+        "phone": { "type": "string", "title": "Telefon" }
+      }
+    },
+    "shipping": {
+      "type": "object",
+      "title": "Leveransuppgifter",
+      "properties": {
+        "first_name": { "type": "string", "title": "Förnamn" },
+        "last_name": { "type": "string", "title": "Efternamn" },
+        "company": { "type": "string", "title": "Företag" },
+        "address_1": { "type": "string", "title": "Adressrad 1" },
+        "address_2": { "type": "string", "title": "Adressrad 2" },
+        "city": { "type": "string", "title": "Stad" },
+        "state": { "type": "string", "title": "Delstat/Län" },
+        "postcode": { "type": "string", "title": "Postnummer" },
+        "country": { "type": "string", "title": "Land (ISO-kod)" },
+        "phone": { "type": "string", "title": "Telefon" }
+      }
+    },
+    "meta_data": {
+      "type": "array",
+      "title": "Metadata",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "integer", "title": "Meta-ID" },
+          "key": { "type": "string", "title": "Nyckel" },
+          "value": { "type": "object", "title": "Värde", "properties": {} },
+          "display_key": { "type": "string", "title": "Visningsnyckel" },
+          "display_value": { "type": "object", "title": "Visningsvärde", "properties": {} }
+        }
+      }
+    }
+  }
 }

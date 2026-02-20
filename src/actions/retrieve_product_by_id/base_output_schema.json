@@ -1,500 +1,360 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "additionalProperties": false,
+  "type": "object",
   "properties": {
-    "attributes": {
-      "description": "List of attributes.",
-      "items": {
-        "properties": {
-          "has_archives": {
-            "description": "Enable/Disable attribute archives.",
-            "type": "boolean"
-          },
-          "id": {
-            "description": "Attribute ID.",
-            "type": "integer"
-          },
-          "name": {
-            "description": "Attribute name.",
-            "type": "string"
-          },
-          "option": {
-            "description": "Selected attribute term name. Applicable only for Product represents SKU (variation)",
-            "type": "string"
-          },
-          "order_by": {
-            "description": "Sort order.",
-            "type": "string"
-          },
-          "slug": {
-            "description": "Attribute slug.",
-            "type": "string"
-          },
-          "type": {
-            "description": "Attribute type.",
-            "type": "string"
-          }
-        },
-        "type": "object"
-      },
-      "type": "array"
-    },
-    "average_rating": {
-      "description": "Reviews average rating. read-only",
-      "type": "string"
-    },
-    "backordered": {
-      "description": "Shows if the product is on backordered. read-only",
-      "type": "boolean"
-    },
-    "backorders": {
-      "description": "If managing stock, this controls if backorders are allowed. Options: no, notify and yes. Default is no.",
-      "type": "string"
-    },
-    "backorders_allowed": {
-      "description": "Shows if backorders are allowed. read-only",
-      "type": "boolean"
-    },
-    "button_text": {
-      "description": "Product external button text. Only for external products.",
-      "type": "string"
-    },
-    "catalog_visibility": {
-      "description": "Catalog visibility. Options: visible, catalog, search and hidden. Default is visible.",
-      "type": "string"
-    },
-    "categories": {
-      "description": "List of categories.",
-      "items": {
-        "properties": {
-          "id": {
-            "description": "Category ID.",
-            "type": "integer"
-          },
-          "name": {
-            "description": "Category name. read-only",
-            "type": "string"
-          },
-          "slug": {
-            "description": "Category slug. read-only",
-            "type": "string"
-          }
-        },
-        "type": "object"
-      },
-      "type": "array"
-    },
-    "cross_sell_ids": {
-      "description": "List of cross-sell products IDs.",
-      "items": {
-        "type": "integer"
-      },
-      "type": "array"
-    },
-    "date_created": {
-      "description": "The date the product was created, in the site's timezone. read-only",
-      "format": "date-time",
-      "type": "string"
-    },
-    "date_created_gmt": {
-      "description": "The date the product was created, as GMT. read-only",
-      "format": "date-time",
-      "type": "string"
-    },
-    "date_modified": {
-      "description": "The date the product was last modified, in the site's timezone. read-only",
-      "format": "date-time",
-      "type": "string"
-    },
-    "date_modified_gmt": {
-      "description": "The date the product was last modified, as GMT. read-only",
-      "format": "date-time",
-      "type": "string"
-    },
-    "date_on_sale_from": {
-      "description": "Start date of sale price, in the site's timezone.",
-      "format": "date-time",
-      "type": "string"
-    },
-    "date_on_sale_from_gmt": {
-      "description": "Start date of sale price, as GMT.",
-      "format": "date-time",
-      "type": "string"
-    },
-    "date_on_sale_to": {
-      "description": "End date of sale price, in the site's timezone.",
-      "format": "date-time",
-      "type": "string"
-    },
-    "date_on_sale_to_gmt": {
-      "description": "End date of sale price, as GMT.",
-      "format": "date-time",
-      "type": "string"
-    },
-    "default_attributes": {
-      "description": "List of default attributes.",
-      "items": {
-        "properties": {
-          "has_archives": {
-            "description": "Enable/Disable attribute archives.",
-            "type": "boolean"
-          },
-          "id": {
-            "description": "Attribute ID.",
-            "type": "integer"
-          },
-          "name": {
-            "description": "Attribute name.",
-            "type": "string"
-          },
-          "option": {
-            "description": "Selected attribute term name. Applicable only for Product represents SKU (variation)",
-            "type": "string"
-          },
-          "order_by": {
-            "description": "Sort order.",
-            "type": "string"
-          },
-          "slug": {
-            "description": "Attribute slug.",
-            "type": "string"
-          },
-          "type": {
-            "description": "Attribute type.",
-            "type": "string"
-          }
-        },
-        "type": "object"
-      },
-      "type": "array"
-    },
-    "description": {
-      "description": "Product description.",
-      "type": "string"
-    },
-    "dimensions": {
-      "properties": {
-        "height": {
-          "description": "Product height.",
-          "type": "string"
-        },
-        "length": {
-          "description": "Product length.",
-          "type": "string"
-        },
-        "width": {
-          "description": "Product width.",
-          "type": "string"
-        }
-      },
-      "type": "object"
-    },
-    "download_expiry": {
-      "description": "Number of days until access to downloadable files expires. Default is -1.",
-      "type": "integer"
-    },
-    "download_limit": {
-      "description": "Number of times downloadable files can be downloaded after purchase. Default is -1.",
-      "type": "integer"
-    },
-    "downloadable": {
-      "description": "If the product is downloadable. Default is false.",
-      "type": "boolean"
-    },
-    "downloads": {
-      "description": "List of downloadable files.",
-      "items": {
-        "properties": {
-          "file": {
-            "description": "File URL.",
-            "type": "string"
-          },
-          "id": {
-            "description": "File ID.",
-            "type": "string"
-          },
-          "name": {
-            "description": "File name.",
-            "type": "string"
-          }
-        },
-        "type": "object"
-      },
-      "type": "array"
-    },
-    "external_url": {
-      "description": "Product external URL. Only for external products.",
-      "type": "string"
-    },
-    "featured": {
-      "description": "Featured product. Default is false.",
-      "type": "boolean"
-    },
-    "grouped_products": {
-      "description": "List of grouped products ID.",
-      "items": {
-        "type": "integer"
-      },
-      "type": "array"
-    },
     "id": {
-      "description": "Unique identifier for the resource. read-only",
-      "type": "integer"
-    },
-    "images": {
-      "description": "List of product images.",
-      "items": {
-        "properties": {
-          "alt": {
-            "description": "Image alternative text.",
-            "type": "string"
-          },
-          "date_created": {
-            "description": "The date the image was created, in the site's timezone. read-only",
-            "format": "date-time",
-            "type": "string"
-          },
-          "date_created_gmt": {
-            "description": "The date the image was created, as GMT. read-only",
-            "format": "date-time",
-            "type": "string"
-          },
-          "date_modified": {
-            "description": "The date the image was last modified, in the site's timezone. read-only",
-            "format": "date-time",
-            "type": "string"
-          },
-          "date_modified_gmt": {
-            "description": "The date the image was last modified, as GMT. read-only",
-            "format": "date-time",
-            "type": "string"
-          },
-          "id": {
-            "description": "Image ID.",
-            "type": "integer"
-          },
-          "name": {
-            "description": "Image name.",
-            "type": "string"
-          },
-          "src": {
-            "description": "Image URL.",
-            "type": "string"
-          }
-        },
-        "type": "object"
-      },
-      "type": "array"
-    },
-    "manage_stock": {
-      "description": "Stock management at product level. Default is false.",
-      "type": "boolean"
-    },
-    "menu_order": {
-      "description": "Menu order, used to custom sort products.",
-      "type": "integer"
-    },
-    "meta_data": {
-      "description": "Meta data properties.",
-      "items": {
-        "properties": {
-          "display_key": {
-            "description": "Meta key for UI display.",
-            "type": "string"
-          },
-          "display_value": {
-            "description": "Meta value for UI display.",
-            "properties": {},
-            "type": "object"
-          },
-          "id": {
-            "description": "Meta ID.",
-            "type": "integer"
-          },
-          "key": {
-            "description": "Meta key.",
-            "type": "string"
-          },
-          "value": {
-            "description": "Meta value.",
-            "properties": {},
-            "type": "object"
-          }
-        },
-        "type": "object"
-      },
-      "type": "array"
+      "type": "integer",
+      "title": "ID"
     },
     "name": {
-      "description": "Product name.",
-      "type": "string"
-    },
-    "on_sale": {
-      "description": "Shows if the product is on sale. read-only",
-      "type": "boolean"
-    },
-    "parent_id": {
-      "description": "Product parent ID.",
-      "type": "integer"
-    },
-    "permalink": {
-      "description": "Product URL. read-only",
-      "type": "string"
-    },
-    "price": {
-      "description": "Current product price. read-only",
-      "type": "string"
-    },
-    "price_html": {
-      "description": "Price formatted in HTML. read-only",
-      "type": "string"
-    },
-    "purchasable": {
-      "description": "Shows if the product can be bought. read-only",
-      "type": "boolean"
-    },
-    "purchase_note": {
-      "description": "Optional note to send the customer after purchase.",
-      "type": "string"
-    },
-    "rating_count": {
-      "description": "Amount of reviews that the product have. read-only",
-      "type": "integer"
-    },
-    "regular_price": {
-      "description": "Regular product price.",
-      "type": "string"
-    },
-    "related_ids": {
-      "description": "List of related products IDs. read-only",
-      "items": {
-        "type": "integer"
-      },
-      "type": "array"
-    },
-    "reviews_allowed": {
-      "description": "Allow reviews. Default is true.",
-      "type": "boolean"
-    },
-    "sale_price": {
-      "description": "Product sale price.",
-      "type": "string"
-    },
-    "shipping_class": {
-      "description": "Shipping class slug.",
-      "type": "string"
-    },
-    "shipping_class_id": {
-      "description": "Shipping class ID.",
-      "type": "integer"
-    },
-    "shipping_required": {
-      "description": "Shows if the product need to be shipped. read-only",
-      "type": "boolean"
-    },
-    "shipping_taxable": {
-      "description": "Shows whether or not the product shipping is taxable. read-only",
-      "type": "boolean"
-    },
-    "short_description": {
-      "description": "Product short description.",
-      "type": "string"
-    },
-    "sku": {
-      "description": "Unique identifier.",
-      "type": "string"
+      "type": "string",
+      "title": "Produktnamn"
     },
     "slug": {
-      "description": "Product slug.",
-      "type": "string"
+      "type": "string",
+      "title": "Slugg"
     },
-    "sold_individually": {
-      "description": "Allow one item to be bought in a single order. Default is false.",
-      "type": "boolean"
+    "permalink": {
+      "type": "string",
+      "title": "Permanent länk"
     },
-    "status": {
-      "description": "Product status (post status). Options: draft, pending, private and publish. Default is publish.",
-      "type": "string"
+    "date_created": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Skapad datum"
     },
-    "stock_quantity": {
-      "description": "Stock quantity.",
-      "type": "integer"
+    "date_created_gmt": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Skapad datum (GMT)"
     },
-    "stock_status": {
-      "description": "Controls the stock status of the product. Options: instock, outofstock, onbackorder. Default is instock.",
-      "type": "string"
+    "date_modified": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Ändrad datum"
     },
-    "tags": {
-      "description": "List of tags.",
-      "items": {
-        "properties": {
-          "count": {
-            "description": "Number of published products for the resource",
-            "type": "integer"
-          },
-          "description": {
-            "description": "HTML description of the resource",
-            "type": "string"
-          },
-          "id": {
-            "description": "Tag ID.",
-            "type": "integer"
-          },
-          "name": {
-            "description": "Tag name. read-only",
-            "type": "string"
-          },
-          "slug": {
-            "description": "Tag slug. read-only",
-            "type": "string"
-          }
-        },
-        "required": [
-          "name"
-        ],
-        "type": "object"
-      },
-      "type": "array"
-    },
-    "tax_class": {
-      "description": "Tax class.",
-      "type": "string"
-    },
-    "tax_status": {
-      "description": "Tax status. Options: taxable, shipping and none. Default is taxable.",
-      "type": "string"
-    },
-    "total_sales": {
-      "description": "Amount of sales. read-only",
-      "format": "int64",
-      "type": "integer"
+    "date_modified_gmt": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Ändrad datum (GMT)"
     },
     "type": {
-      "description": "Product type. Options: simple, grouped, external and variable. Default is simple.",
-      "type": "string"
+      "type": "string",
+      "title": "Produkttyp"
     },
-    "upsell_ids": {
-      "description": "List of up-sell products IDs.",
-      "items": {
-        "type": "integer"
-      },
-      "type": "array"
+    "status": {
+      "type": "string",
+      "title": "Status"
     },
-    "variations": {
-      "description": "List of variations IDs. read-only",
-      "items": {
-        "type": "integer"
-      },
-      "type": "array"
+    "featured": {
+      "type": "boolean",
+      "title": "Framhävd produkt"
+    },
+    "catalog_visibility": {
+      "type": "string",
+      "title": "Synlighet i katalog"
+    },
+    "description": {
+      "type": "string",
+      "title": "Beskrivning"
+    },
+    "short_description": {
+      "type": "string",
+      "title": "Kort beskrivning"
+    },
+    "sku": {
+      "type": "string",
+      "title": "SKU (Artikelnr)"
+    },
+    "price": {
+      "type": "string",
+      "title": "Pris"
+    },
+    "regular_price": {
+      "type": "string",
+      "title": "Ordinarie pris"
+    },
+    "sale_price": {
+      "type": "string",
+      "title": "Reapris"
+    },
+    "date_on_sale_from": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Rea startdatum"
+    },
+    "date_on_sale_from_gmt": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Rea startdatum (GMT)"
+    },
+    "date_on_sale_to": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Rea slutdatum"
+    },
+    "date_on_sale_to_gmt": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Rea slutdatum (GMT)"
+    },
+    "price_html": {
+      "type": "string",
+      "title": "Pris (HTML)"
+    },
+    "on_sale": {
+      "type": "boolean",
+      "title": "På rea"
+    },
+    "purchasable": {
+      "type": "boolean",
+      "title": "Köpbart"
+    },
+    "total_sales": {
+      "type": "integer",
+      "format": "int64",
+      "title": "Totalt sålda"
     },
     "virtual": {
-      "description": "If the product is virtual. Default is false.",
-      "type": "boolean"
+      "type": "boolean",
+      "title": "Virtuell"
+    },
+    "downloadable": {
+      "type": "boolean",
+      "title": "Nedladdningsbar"
+    },
+    "downloads": {
+      "type": "array",
+      "title": "Nedladdningar",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string", "title": "Fil-ID" },
+          "name": { "type": "string", "title": "Filnamn" },
+          "file": { "type": "string", "title": "Fil-URL" }
+        }
+      }
+    },
+    "download_limit": {
+      "type": "integer",
+      "title": "Nedladdningsgräns"
+    },
+    "download_expiry": {
+      "type": "integer",
+      "title": "Giltighetstid för nedladdning"
+    },
+    "external_url": {
+      "type": "string",
+      "title": "Extern URL"
+    },
+    "button_text": {
+      "type": "string",
+      "title": "Knapptext"
+    },
+    "tax_status": {
+      "type": "string",
+      "title": "Skattestatus"
+    },
+    "tax_class": {
+      "type": "string",
+      "title": "Skatteklass"
+    },
+    "manage_stock": {
+      "type": "boolean",
+      "title": "Hantera lager"
+    },
+    "stock_quantity": {
+      "type": "integer",
+      "title": "Lagersaldo"
+    },
+    "stock_status": {
+      "type": "string",
+      "title": "Lagerstatus"
+    },
+    "backorders": {
+      "type": "string",
+      "title": "Restnoteringar"
+    },
+    "backorders_allowed": {
+      "type": "boolean",
+      "title": "Restnoteringar tillåtna"
+    },
+    "backordered": {
+      "type": "boolean",
+      "title": "Är restnoterad"
+    },
+    "sold_individually": {
+      "type": "boolean",
+      "title": "Säljs styckvis"
     },
     "weight": {
-      "description": "Product weight.",
-      "type": "string"
+      "type": "string",
+      "title": "Vikt"
+    },
+    "dimensions": {
+      "type": "object",
+      "title": "Dimensioner",
+      "properties": {
+        "length": { "type": "string", "title": "Längd" },
+        "width": { "type": "string", "title": "Bredd" },
+        "height": { "type": "string", "title": "Höjd" }
+      }
+    },
+    "shipping_required": {
+      "type": "boolean",
+      "title": "Frakt krävs"
+    },
+    "shipping_taxable": {
+      "type": "boolean",
+      "title": "Frakt är skattepliktig"
+    },
+    "shipping_class": {
+      "type": "string",
+      "title": "Fraktklass"
+    },
+    "shipping_class_id": {
+      "type": "integer",
+      "title": "Fraktklass-ID"
+    },
+    "reviews_allowed": {
+      "type": "boolean",
+      "title": "Recensioner tillåtna"
+    },
+    "average_rating": {
+      "type": "string",
+      "title": "Genomsnittligt betyg"
+    },
+    "rating_count": {
+      "type": "integer",
+      "title": "Antal betyg"
+    },
+    "related_ids": {
+      "type": "array",
+      "title": "Relaterade produkt-ID:n",
+      "items": { "type": "integer" }
+    },
+    "upsell_ids": {
+      "type": "array",
+      "title": "Mersäljs-ID:n (Upsells)",
+      "items": { "type": "integer" }
+    },
+    "cross_sell_ids": {
+      "type": "array",
+      "title": "Korssäljs-ID:n (Cross-sells)",
+      "items": { "type": "integer" }
+    },
+    "parent_id": {
+      "type": "integer",
+      "title": "Moderprodukt-ID"
+    },
+    "purchase_note": {
+      "type": "string",
+      "title": "Köpnotering"
+    },
+    "categories": {
+      "type": "array",
+      "title": "Kategorier",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "integer", "title": "Kategori-ID" },
+          "name": { "type": "string", "title": "Kategorinamn" },
+          "slug": { "type": "string", "title": "Kategori-slugg" }
+        }
+      }
+    },
+    "tags": {
+      "type": "array",
+      "title": "Taggar",
+      "items": {
+        "type": "object",
+        "required": ["name"],
+        "properties": {
+          "id": { "type": "integer", "title": "Tagg-ID" },
+          "name": { "type": "string", "title": "Taggnamn" },
+          "slug": { "type": "string", "title": "Tagg-slugg" },
+          "description": { "type": "string", "title": "Taggbeskrivning" },
+          "count": { "type": "integer", "title": "Antal produkter" }
+        }
+      }
+    },
+    "images": {
+      "type": "array",
+      "title": "Bilder",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "integer", "title": "Bild-ID" },
+          "date_created": { "type": "string", "format": "date-time", "title": "Skapad" },
+          "date_created_gmt": { "type": "string", "format": "date-time", "title": "Skapad (GMT)" },
+          "date_modified": { "type": "string", "format": "date-time", "title": "Ändrad" },
+          "date_modified_gmt": { "type": "string", "format": "date-time", "title": "Ändrad (GMT)" },
+          "src": { "type": "string", "title": "Bildkälla (URL)" },
+          "name": { "type": "string", "title": "Bildnamn" },
+          "alt": { "type": "string", "title": "Alt-text" }
+        }
+      }
+    },
+    "attributes": {
+      "type": "array",
+      "title": "Attribut",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "integer", "title": "Attribut-ID" },
+          "name": { "type": "string", "title": "Attributnamn" },
+          "slug": { "type": "string", "title": "Attribut-slugg" },
+          "option": { "type": "string", "title": "Valt alternativ" },
+          "has_archives": { "type": "boolean", "title": "Har arkiv" },
+          "order_by": { "type": "string", "title": "Sortering" },
+          "type": { "type": "string", "title": "Typ" }
+        }
+      }
+    },
+    "default_attributes": {
+      "type": "array",
+      "title": "Standardattribut",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "integer", "title": "Attribut-ID" },
+          "name": { "type": "string", "title": "Attributnamn" },
+          "slug": { "type": "string", "title": "Attribut-slugg" },
+          "option": { "type": "string", "title": "Valt alternativ" },
+          "has_archives": { "type": "boolean", "title": "Har arkiv" },
+          "order_by": { "type": "string", "title": "Sortering" },
+          "type": { "type": "string", "title": "Typ" }
+        }
+      }
+    },
+    "variations": {
+      "type": "array",
+      "title": "Varianter",
+      "items": { "type": "integer" }
+    },
+    "grouped_products": {
+      "type": "array",
+      "title": "Grupperade produkter",
+      "items": { "type": "integer" }
+    },
+    "menu_order": {
+      "type": "integer",
+      "title": "Menyordning"
+    },
+    "meta_data": {
+      "type": "array",
+      "title": "Metadata",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "integer", "title": "Meta-ID" },
+          "key": { "type": "string", "title": "Nyckel" },
+          "value": { "type": "object", "title": "Värde", "properties": {} },
+          "display_key": { "type": "string", "title": "Visningsnyckel" },
+          "display_value": { "type": "object", "title": "Visningsvärde", "properties": {} }
+        }
+      }
     }
-  },
-  "type": "object"
+  }
 }
