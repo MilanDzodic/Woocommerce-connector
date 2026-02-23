@@ -1,6 +1,0 @@
-{
-  "action_name": "update_order_by_id",
-  "method": "put",
-  "operation_id": "updateOrderById",
-  "path": "/orders/{orderId}"
-}
