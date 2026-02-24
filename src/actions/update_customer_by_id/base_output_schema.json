@@ -5,20 +5,15 @@
   "properties": {
     "id": {
       "type": "integer",
-      "title": "Kund-ID (för uppdatering)",
-      "description": "Lämna tomt för att skapa en ny kund. Ange ID för att uppdatera en befintlig."
-    },
-    "email": {
-      "type": "string",
-      "title": "E-postadress"
+      "title": "ID"
     },
     "username": {
       "type": "string",
       "title": "Användarnamn"
     },
-    "password": {
+    "email": {
       "type": "string",
-      "title": "Lösenord"
+      "title": "E-postadress"
     },
     "first_name": {
       "type": "string",
@@ -30,8 +25,39 @@
     },
     "role": {
       "type": "string",
-      "title": "Roll",
-      "description": "Exempel: customer, subscriber, etc."
+      "title": "Roll"
+    },
+    "password": {
+      "type": "string",
+      "title": "Lösenord"
+    },
+    "date_created": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Skapad datum"
+    },
+    "date_created_gmt": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Skapad datum (GMT)"
+    },
+    "date_modified": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Ändrad datum"
+    },
+    "date_modified_gmt": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Ändrad datum (GMT)"
+    },
+    "is_paying_customer": {
+      "type": "boolean",
+      "title": "Är betalande kund"
+    },
+    "avatar_url": {
+      "type": "string",
+      "title": "Avatar-URL"
     },
     "billing": {
       "type": "object",
@@ -66,21 +92,19 @@
         "phone": { "type": "string", "title": "Telefon" }
       }
     },
-    "avatar_url": {
-      "type": "string",
-      "title": "Avatar-URL"
-    },
-    "on_not_found": {
-    "type": "string",
-    "title": "Hantering vid saknat resultat",
-    "default": "fail",
-    "oneOf": [
-      { "const": "fail", "title": "Misslyckas (stoppa körningen)" },
-      { "const": "continue", "title": "Fortsätt med tomt resultat" },
-      { "const": "exit_level", "title": "Avbryt nuvarande nivå" },
-      { "const": "exit_execution", "title": "Avbryt hela körningen" }
-      ]
+    "meta_data": {
+      "type": "array",
+      "title": "Metadata",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "integer", "title": "Meta-ID" },
+          "key": { "type": "string", "title": "Nyckel" },
+          "value": { "type": "object", "title": "Värde", "properties": {} },
+          "display_key": { "type": "string", "title": "Visningsnyckel" },
+          "display_value": { "type": "object", "title": "Visningsvärde", "properties": {} }
+        }
+      }
     }
-  },
-  "required": []
+  }
 }
