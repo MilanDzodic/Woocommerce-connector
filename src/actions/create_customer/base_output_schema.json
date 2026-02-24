@@ -1,0 +1,109 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": true,
+  "type": "object",
+  "required": [
+    "id"
+  ],
+  "properties": {
+    "avatar_url": {
+      "type": "string",
+      "title": "Avatar-URL"
+    },
+    "billing": {
+      "type": "object",
+      "title": "Faktureringsuppgifter",
+      "properties": {
+        "address_1": { "type": "string", "title": "Adressrad 1" },
+        "address_2": { "type": "string", "title": "Adressrad 2" },
+        "city": { "type": "string", "title": "Stad" },
+        "company": { "type": "string", "title": "Företag" },
+        "country": { "type": "string", "title": "Land (ISO-kod)" },
+        "email": { "type": "string", "title": "E-post" },
+        "first_name": { "type": "string", "title": "Förnamn" },
+        "last_name": { "type": "string", "title": "Efternamn" },
+        "phone": { "type": "string", "title": "Telefon" },
+        "postcode": { "type": "string", "title": "Postnummer" },
+        "state": { "type": "string", "title": "Delstat/Län" }
+      }
+    },
+    "date_created": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Skapad datum (lokal tid)"
+    },
+    "date_created_gmt": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Skapad datum (GMT)"
+    },
+    "date_modified": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Ändrad datum (lokal tid)"
+    },
+    "date_modified_gmt": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Ändrad datum (GMT)"
+    },
+    "email": {
+      "type": "string",
+      "title": "E-postadress"
+    },
+    "first_name": {
+      "type": "string",
+      "title": "Förnamn"
+    },
+    "id": {
+      "type": "integer",
+      "title": "ID"
+    },
+    "is_paying_customer": {
+      "type": "boolean",
+      "title": "Betalande kund"
+    },
+    "last_name": {
+      "type": "string",
+      "title": "Efternamn"
+    },
+    "meta_data": {
+      "type": "array",
+      "title": "Metadata",
+      "items": {
+        "type": "object",
+        "properties": {
+          "display_key": { "type": "string", "title": "Visningsnyckel" },
+          "display_value": { "title": "Visningsvärde" },
+          "id": { "type": "integer", "title": "Meta-ID" },
+          "key": { "type": "string", "title": "Nyckel" },
+          "value": { "title": "Värde" }
+        }
+      }
+    },
+    "role": {
+      "type": "string",
+      "title": "Roll"
+    },
+    "shipping": {
+      "type": "object",
+      "title": "Leveransuppgifter",
+      "properties": {
+        "address_1": { "type": "string", "title": "Adressrad 1" },
+        "address_2": { "type": "string", "title": "Adressrad 2" },
+        "city": { "type": "string", "title": "Stad" },
+        "company": { "type": "string", "title": "Företag" },
+        "country": { "type": "string", "title": "Land (ISO-kod)" },
+        "first_name": { "type": "string", "title": "Förnamn" },
+        "last_name": { "type": "string", "title": "Efternamn" },
+        "phone": { "type": "string", "title": "Telefon" },
+        "postcode": { "type": "string", "title": "Postnummer" },
+        "state": { "type": "string", "title": "Delstat/Län" }
+      }
+    },
+    "username": {
+      "type": "string",
+      "title": "Användarnamn"
+    }
+  }
+}
