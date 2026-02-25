@@ -3,7 +3,6 @@ use crate::client::ApiClient;
 use crate::actions::utils::request_body_without_empty_values;
 use serde_json::Value;
 
-/// Get the ApiClient from context
 #[allow(dead_code)]
 fn client(context: &ActionContext) -> Result<ApiClient, AppError> {
     let connection_data: serde_json::Value =
@@ -14,7 +13,6 @@ fn client(context: &ActionContext) -> Result<ApiClient, AppError> {
     ApiClient::new(&connection_data)
 }
 
-/// Get the input data from context
 #[allow(dead_code)]
 fn input_data(context: &ActionContext) -> Result<Value, AppError> {
     serde_json::from_str(&context.serialized_input).map_err(|e| AppError {
@@ -23,7 +21,6 @@ fn input_data(context: &ActionContext) -> Result<Value, AppError> {
     })
 }
 
-/// Execute the action
 #[allow(dead_code)]
 pub fn execute(context: ActionContext) -> Result<Value, AppError> {
   let client = client(&context)?;
@@ -59,7 +56,6 @@ pub fn execute(context: ActionContext) -> Result<Value, AppError> {
   Ok(response_json)
 }
 
-/// Get the input schema for this action
 #[allow(dead_code)]
 pub fn input_schema(_context: &ActionContext) -> Result<serde_json::Value, AppError> {
     let base_schema = include_str!("base_input_schema.json");
@@ -68,7 +64,6 @@ pub fn input_schema(_context: &ActionContext) -> Result<serde_json::Value, AppEr
     Ok(schema)
 }
 
-/// Get the output schema for this action
 #[allow(dead_code)]
 pub fn output_schema(_context: &ActionContext) -> Result<serde_json::Value, AppError> {
     let base_schema = include_str!("base_output_schema.json");

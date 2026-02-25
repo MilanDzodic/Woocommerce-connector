@@ -1,10 +1,8 @@
 require 'spec_helper'
 
-# Updated description to match folder name (Feedback point 5)
 RSpec.describe 'actions.list_all_products' do
   let(:mock_server) { instance_variable_get(:@mock_server) }
 
-  # Path to your compiled WASM binary
   let(:app) do
     AppBridge::App.new('target/wasm32-wasip2/release/woocommerce_connector.wasm')
   end
@@ -36,7 +34,6 @@ RSpec.describe 'actions.list_all_products' do
 
     url = "/products?page=1&per_page=100&sku=#{sku}"
 
-    # WooCommerce returns a list, Rust code filters it and wraps in { "items": [...] }
     mock_server.mock_endpoint(:get, url, [
       { 'id' => 555, 'sku' => 'GTX-1080-TI' }
     ])
@@ -44,7 +41,6 @@ RSpec.describe 'actions.list_all_products' do
     response = tester.execute_action('search_products', { 'sku' => sku })
     data = JSON.parse(response.serialized_output)
 
-    # We now expect an object with an 'items' array (Feedback point 1)
     expect(data['items']).to be_an(Array)
     expect(data['items'].first['sku']).to eq(sku)
     expect(data['items'].first['id']).to eq(555)
