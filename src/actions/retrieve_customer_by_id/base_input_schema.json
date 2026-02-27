@@ -13,13 +13,13 @@
     },
     "on_not_found": {
     "type": "string",
-    "title": "Hantering vid saknat resultat",
+    "title": "Om angivet Kund-ID inte finns, vad vill du göra då?",
     "default": "fail",
     "oneOf": [
-      { "const": "fail", "title": "Misslyckas (stoppa körningen)" },
-      { "const": "continue", "title": "Fortsätt med tomt resultat" },
-      { "const": "exit_level", "title": "Avbryt nuvarande nivå" },
-      { "const": "exit_execution", "title": "Avbryt hela körningen" }
+      { "const": "fail", "title": "Fallera" },
+      { "const": "continue", "title": "Skapa ny" },
+      { "const": "exit_level", "title": "Avsluta nivå" },
+      { "const": "exit_execution", "title": "Avsluta körning" }
       ]
     }
   }

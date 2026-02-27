@@ -3,7 +3,7 @@
   "additionalProperties": false,
   "type": "object",
   "properties": {
-    "id": {
+    "customerId": {
       "type": "integer",
       "title": "Kund-ID (för uppdatering)",
       "description": "Lämna tomt för att skapa en ny kund. Ange ID för att uppdatera en befintlig."
@@ -69,17 +69,6 @@
     "avatar_url": {
       "type": "string",
       "title": "Avatar-URL"
-    },
-    "on_not_found": {
-    "type": "string",
-    "title": "Hantering vid saknat resultat",
-    "default": "fail",
-    "oneOf": [
-      { "const": "fail", "title": "Misslyckas (stoppa körningen)" },
-      { "const": "continue", "title": "Fortsätt med tomt resultat" },
-      { "const": "exit_level", "title": "Avbryt nuvarande nivå" },
-      { "const": "exit_execution", "title": "Avbryt hela körningen" }
-      ]
     }
   },
   "required": []

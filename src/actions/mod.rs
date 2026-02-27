@@ -5,8 +5,8 @@
 pub mod utils;
 
 // Include generated action executors
-pub mod create_customer {
-    include!("../actions/create_customer/action.rs");
+pub mod create_or_update_customer {
+    include!("../actions/create_or_update_customer/action.rs");
 }
 
 pub mod retrieve_customer_by_id {
@@ -15,10 +15,6 @@ pub mod retrieve_customer_by_id {
 
 pub mod search_products {
     include!("../actions/search_products/action.rs");
-}
-
-pub mod update_customer_by_id {
-    include!("../actions/update_customer_by_id/action.rs");
 }
 
 

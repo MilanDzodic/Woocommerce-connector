@@ -76,33 +76,6 @@ RSpec.describe 'actions.list_all_products' do
     expect(data['items']).to eq([])
   end
 
-  describe 'with flow control' do
-    it 'raises CompleteParentException on 404 if strategy is exit_level' do
-      url = "/products?page=1&per_page=100&sku=FAIL"
-      body = { message: "Not Found" }
-      mock_server.mock_endpoint(:get, url, body, status: 404)
-
-      expect {
-        tester.execute_action('search_products', {
-          'sku' => 'FAIL',
-          'on_not_found' => 'exit_level'
-        })
-      }.to raise_error(AppBridge::CompleteParentException)
-    end
-
-    it 'raises CompleteParentException if product is not found in result list' do
-      url = "/products?page=1&per_page=100&sku=EMPTY-LIST"
-      mock_server.mock_endpoint(:get, url, [])
-
-      expect {
-        tester.execute_action('search_products', {
-          'sku' => 'EMPTY-LIST',
-          'on_not_found' => 'exit_level'
-        })
-      }.to raise_error(AppBridge::CompleteParentException)
-    end
-  end
-
   it 'paginates through multiple pages until all products are fetched' do
 
     page1_products = Array.new(100) { |i| { 'id' => i, 'name' => "Product #{i}" } }
@@ -119,5 +92,15 @@ RSpec.describe 'actions.list_all_products' do
     expect(data['items'].length).to eq(105)
     expect(data['items'].first['id']).to eq(0)
     expect(data['items'].last['id']).to eq(104)
+  end
+
+  it 'returns an empty items list when no products are found' do
+    url = "/products?page=1&per_page=100&sku=MISSING"
+    mock_server.mock_endpoint(:get, url, [])
+
+    response = tester.execute_action('search_products', { 'sku' => 'MISSING' })
+    data = JSON.parse(response.serialized_output)
+
+    expect(data['items']).to eq([])
   end
 end

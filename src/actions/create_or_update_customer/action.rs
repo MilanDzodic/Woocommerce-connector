@@ -5,20 +5,20 @@ use serde_json::Value;
 
 #[allow(dead_code)]
 fn client(context: &ActionContext) -> Result<ApiClient, AppError> {
-    let connection_data: serde_json::Value =
-        serde_json::from_str(&context.connection.serialized_data).map_err(|e| AppError {
-            code: ErrorCode::Other,
-            message: format!("Invalid connection configuration: {}", e),
-        })?;
-    ApiClient::new(&connection_data)
+  let connection_data: serde_json::Value =
+    serde_json::from_str(&context.connection.serialized_data).map_err(|e| AppError {
+      code: ErrorCode::Other,
+      message: format!("Invalid connection configuration: {}", e),
+    })?;
+  ApiClient::new(&connection_data)
 }
 
 #[allow(dead_code)]
 fn input_data(context: &ActionContext) -> Result<Value, AppError> {
-    serde_json::from_str(&context.serialized_input).map_err(|e| AppError {
-        code: ErrorCode::Other,
-        message: format!("Invalid input data: {}", e),
-    })
+  serde_json::from_str(&context.serialized_input).map_err(|e| AppError {
+    code: ErrorCode::Other,
+    message: format!("Invalid input data: {}", e),
+  })
 }
 
 #[allow(dead_code)]
@@ -26,12 +26,13 @@ pub fn execute(context: ActionContext) -> Result<Value, AppError> {
   let client = client(&context)?;
   let input_data = input_data(&context)?;
 
-  let id = input_data.get("id").and_then(|v| v.as_i64());
+  let customer_id = input_data.get("customerId")
+    .and_then(|v| v.as_i64().or_else(|| v.as_str().and_then(|s| s.parse::<i64>().ok())));
 
-  let request_body = request_body_without_empty_values(&input_data, &["id"])?;
+  let request_body = request_body_without_empty_values(&input_data, &["customerId", "on_not_found"])?;
 
-  let (status, response_body) = if let Some(customer_id) = id {
-    let endpoint = format!("/customers/{}", customer_id);
+  let (status, response_body) = if let Some(id) = customer_id {
+    let endpoint = format!("/customers/{}", id);
     client.put(&endpoint, &request_body)
   } else {
     let endpoint = "/customers";
@@ -58,18 +59,14 @@ pub fn execute(context: ActionContext) -> Result<Value, AppError> {
 
 #[allow(dead_code)]
 pub fn input_schema(_context: &ActionContext) -> Result<serde_json::Value, AppError> {
-    let base_schema = include_str!("base_input_schema.json");
-    let schema: serde_json::Value = serde_json::from_str(base_schema).unwrap();
-
-    Ok(schema)
+  let base_schema = include_str!("base_input_schema.json");
+  let schema: serde_json::Value = serde_json::from_str(base_schema).unwrap();
+  Ok(schema)
 }
 
 #[allow(dead_code)]
 pub fn output_schema(_context: &ActionContext) -> Result<serde_json::Value, AppError> {
-    let base_schema = include_str!("base_output_schema.json");
-    let schema: serde_json::Value = serde_json::from_str(base_schema).unwrap();
-
-    Ok(schema)
+  let base_schema = include_str!("base_output_schema.json");
+  let schema: serde_json::Value = serde_json::from_str(base_schema).unwrap();
+  Ok(schema)
 }
-
-

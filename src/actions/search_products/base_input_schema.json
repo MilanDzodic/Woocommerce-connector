@@ -42,17 +42,6 @@
     "max_price": {
       "type": "string",
       "title": "Högsta pris"
-    },
-    "on_not_found": {
-    "type": "string",
-    "title": "Hantering vid saknat resultat",
-    "default": "fail",
-    "oneOf": [
-      { "const": "fail", "title": "Misslyckas (felmeddelande)" },
-      { "const": "continue", "title": "Fortsätt med tomt resultat" },
-      { "const": "exit_level", "title": "Avbryt nuvarande nivå" },
-      { "const": "exit_execution", "title": "Avbryt hela körningen" }
-      ]
     }
   }
 }
