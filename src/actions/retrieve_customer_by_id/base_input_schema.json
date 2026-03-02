@@ -12,26 +12,14 @@
       "description": "Det unika ID:t för kunden i WooCommerce."
     },
     "on_not_found": {
-      "type": "string",
-      "title": "Om kund inte hittas",
-      "default": "fail",
-      "oneOf": [
-        {
-          "const": "fail",
-          "title": "Misslyckas (stoppa körningen)"
-        },
-        {
-          "const": "continue",
-          "title": "Fortsätt (utan resultatdata)"
-        },
-        {
-          "const": "exit_level",
-          "title": "Avbryt nuvarande nivå"
-        },
-        {
-          "const": "exit_execution",
-          "title": "Avbryt hela körningen"
-        }
+    "type": "string",
+    "title": "Om angivet Kund-ID inte finns, vad vill du göra då?",
+    "default": "fail",
+    "oneOf": [
+      { "const": "fail", "title": "Fallera" },
+      { "const": "continue", "title": "Skapa ny" },
+      { "const": "exit_level", "title": "Avsluta nivå" },
+      { "const": "exit_execution", "title": "Avsluta körning" }
       ]
     }
   }
