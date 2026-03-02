@@ -1,6 +1,7 @@
 {
-  "action_name": "create_customer",
+  "action_name": "create_or_update_customer",
+  "operation_id": "createOrUpdateCustomer",
   "method": "post",
-  "operation_id": "createCustomer",
-  "path": "/customers"
+  "category": "Customers",
+  "description": "Skapa en ny eller uppdatera en befintlig kund i WooCommerce (Upsert)."
 }
