@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-RSpec.describe 'actions.create_customer' do
+RSpec.describe 'actions.create_or_update_customer' do
   let(:mock_server) { instance_variable_get(:@mock_server) }
 
   let(:app) do
@@ -44,7 +44,7 @@ RSpec.describe 'actions.create_customer' do
       'last_name' => 'Person'
     }, status: 201)
 
-    response = tester.execute_action('create_customer', input)
+    response = tester.execute_action('create_or_update_customer', input)
     data = JSON.parse(response.serialized_output)
 
     expect(data['id']).to eq(456)
@@ -61,19 +61,19 @@ RSpec.describe 'actions.create_customer' do
     }, status: 400)
 
     expect {
-      tester.execute_action('create_customer', input)
+      tester.execute_action('create_or_update_customer', input)
     }.to raise_error(AppBridge::OtherError, /WooCommerce returnerade felkod 400/)
   end
 
   it 'sends POST when ID is missing' do
     input = { 'email' => 'ny@test.se' }
     mock_server.mock_endpoint(:post, '/customers', { 'id' => 1 }.to_json, status: 201)
-    tester.execute_action('create_customer', input)
+    tester.execute_action('create_or_update_customer', input)
   end
 
   it 'sends PUT when ID is provided' do
-    input = { 'id' => 123, 'email' => 'befintlig@test.se' }
+    input = { 'customerId' => 123, 'email' => 'befintlig@test.se' }
     mock_server.mock_endpoint(:put, '/customers/123', { 'id' => 123 }.to_json, status: 200)
-    tester.execute_action('create_customer', input)
+    tester.execute_action('create_or_update_customer', input)
   end
 end

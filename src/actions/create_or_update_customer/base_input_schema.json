@@ -3,7 +3,7 @@
   "additionalProperties": false,
   "type": "object",
   "properties": {
-    "id": {
+    "customerId": {
       "type": "integer",
       "title": "Kund-ID (för uppdatering)",
       "description": "Lämna tomt för att skapa en ny kund. Ange ID för att uppdatera en befintlig."

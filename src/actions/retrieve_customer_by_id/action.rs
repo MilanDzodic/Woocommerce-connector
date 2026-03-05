@@ -92,17 +92,13 @@ fn build_endpoint(path_template: &str, params: &serde_json::Map<String, Value>) 
 
 fn filter_customer_data(mut customer: Value) -> Value {
     if let Some(obj) = customer.as_object_mut() {
-        // Ta bort lösenordet om det existerar
         obj.remove("password");
 
-        // Här kan du även rensa bort andra interna WooCommerce-fält
-        // som inte finns i ditt base_output_schema.json
         obj.remove("_links");
     }
     customer
 }
 
-/// Get the input_schema for this action
 #[allow(dead_code)]
 pub fn input_schema(_context: &ActionContext) -> Result<serde_json::Value, AppError> {
   let base_schema = include_str!("base_input_schema.json");
@@ -114,7 +110,6 @@ pub fn input_schema(_context: &ActionContext) -> Result<serde_json::Value, AppEr
   Ok(schema)
 }
 
-/// Get the output schema for this action
 #[allow(dead_code)]
 pub fn output_schema(_context: &ActionContext) -> Result<serde_json::Value, AppError> {
   let base_schema = include_str!("base_output_schema.json");

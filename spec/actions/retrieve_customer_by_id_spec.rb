@@ -3,12 +3,10 @@ require 'spec_helper'
 RSpec.describe 'actions.retrieve_customer_by_id' do
   let(:mock_server) { instance_variable_get(:@mock_server) }
 
-  # Start WASM-app
   let(:app) do
     AppBridge::App.new('target/wasm32-wasip2/release/woocommerce_connector.wasm')
   end
 
-  # Creaste connection-object with necesseray header for AppBridge
   let(:connection) do
     AppBridge::Connection.new(
       'test-id',
@@ -32,7 +30,6 @@ RSpec.describe 'actions.retrieve_customer_by_id' do
   end
 
   it 'Retrieving customer with correct id and returning correct data from rust' do
-    # 1. Prepare mock-response
     mock_server.mock_endpoint(:get, '/customers/123', {
       'id' => 123,
       'email' => 'customer@example.com',
@@ -40,10 +37,8 @@ RSpec.describe 'actions.retrieve_customer_by_id' do
       'last_name' => 'Andersson'
     })
 
-    # 2. Run action
     response = tester.execute_action('retrieve_customer_by_id', { 'customerId' => 123 })
 
-    # 3. Parse result with the correct method :serialized_output
     data = JSON.parse(response.serialized_output)
 
     puts "\n" + "="*40
@@ -51,19 +46,16 @@ RSpec.describe 'actions.retrieve_customer_by_id' do
     pp data
     puts "="*40
 
-    # 4. Verify result
     expect(data['id']).to eq(123)
     expect(data['email']).to eq('customer@example.com')
     expect(data['first_name']).to eq('Anders')
   end
 
   it 'Accepting both string and intiger as customer id in rust logic' do
-    # Test with string
     mock_server.mock_endpoint(:get, '/customers/456', { 'id' => 456 })
     res_str = tester.execute_action('retrieve_customer_by_id', { 'customerId' => '456' })
     expect(JSON.parse(res_str.serialized_output)['id']).to eq(456)
 
-    # Test with digit
     mock_server.mock_endpoint(:get, '/customers/789', { 'id' => 789 })
     res_int = tester.execute_action('retrieve_customer_by_id', { 'customerId' => 789 })
     expect(JSON.parse(res_int.serialized_output)['id']).to eq(789)
