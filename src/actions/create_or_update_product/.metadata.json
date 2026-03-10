@@ -1,0 +1,6 @@
+{
+  "action_name": "create_or_update_product",
+  "method": "post",
+  "operation_id": "createProduct",
+  "path": "/products"
+}
