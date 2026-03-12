@@ -22,67 +22,44 @@ fn input_data(context: &ActionContext) -> Result<Value, AppError> {
 
 #[allow(dead_code)]
 pub fn execute(context: ActionContext) -> Result<Value, AppError> {
-    eprintln!("DEBUG: lib.rs received action_id: {}", context.action_id);
+  let client = client(&context)?;
 
-    eprintln!("DEBUG: Entering execute_action");
+  let input_value: Value = serde_json::from_str(&context.serialized_input).map_err(|e| AppError {
+    code: ErrorCode::Other,
+    message: format!("Kunde inte parsa input JSON: {}", e),
+  })?;
 
-    let client = client(&context)?;
+  let mut body_map = input_value.as_object().ok_or_else(|| AppError {
+    code: ErrorCode::Other,
+    message: "Input data must be a JSON object".to_string(),
+  })?.clone();
 
-    // 1. Laga felet med input_data: Vi måste parsa serialized_input till en Value::Object
-    let input_value: Value = serde_json::from_str(&context.serialized_input).map_err(|e| AppError {
-        code: ErrorCode::Other,
-        message: format!("Kunde inte parsa input JSON: {}", e),
-    })?;
+  let product_id = body_map.remove("productId").and_then(|v| v.as_i64());
 
-    let input_map = input_value.as_object().ok_or_else(|| AppError {
-        code: ErrorCode::Other,
-        message: "Input data must be a JSON object".to_string(),
-    })?;
+  let request_body = Value::Object(body_map);
 
-    eprintln!("DEBUG: Input keys: {:?}", input_map.keys());
+  let (status, response_body) = if let Some(id) = product_id {
+    client.put(&format!("/products/{}", id), &request_body)
+  } else {
+    client.post("/products", &request_body)
+  }.map_err(|e| AppError {
+    code: ErrorCode::Other,
+    message: format!("API request failed: {}", e.message),
+  })?;
 
-    // 2. Laga "type annotations needed": Vi hjälper kompilatorn med i64-typerna
-    let product_id = input_map.get("productId").and_then(|v| {
-        v.as_i64()
-            .or_else(|| {
-                v.as_str().and_then(|s| s.parse::<i64>().ok())
-            })
+  if status >= 400 {
+    return Err(AppError {
+      code: ErrorCode::Other,
+      message: format!("WooCommerce returnerade felkod {}: {}", status, response_body),
     });
+  }
 
-    // 3. Skapa body för API-anropet
-    let mut body_map = input_map.clone();
-    body_map.remove("productId");
-    body_map.remove("id");
-    body_map.remove("on_not_found");
-    let request_body = Value::Object(body_map);
+  let response_json: Value = serde_json::from_str(&response_body).map_err(|e| AppError {
+    code: ErrorCode::MalformedResponse,
+    message: format!("Kunde inte tolka svar från API: {}", e),
+  })?;
 
-    // 4. Utför anropet
-    let (status, response_body) = if let Some(id) = product_id {
-        eprintln!("DEBUG: Performing PUT to /products/{}", id);
-        client.put(&format!("/products/{}", id), &request_body)
-    } else {
-        eprintln!("DEBUG: Performing POST to /products");
-        client.post("/products", &request_body)
-    }.map_err(|e| AppError {
-        code: ErrorCode::Other,
-        message: format!("API request failed: {}", e.message),
-    })?;
-
-    eprintln!("DEBUG: API Response: status={}, body={}", status, response_body);
-
-    if status >= 400 {
-        return Err(AppError {
-            code: ErrorCode::Other,
-            message: format!("WooCommerce error {}: {}", status, response_body),
-        });
-    }
-
-    let response_json: Value = serde_json::from_str(&response_body).map_err(|e| AppError {
-        code: ErrorCode::MalformedResponse,
-        message: format!("Failed to parse response: {}", e),
-    })?;
-
-    Ok(response_json)
+  Ok(response_json)
 }
 
 #[allow(dead_code)]
