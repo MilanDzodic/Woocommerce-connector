@@ -9,6 +9,10 @@ pub mod create_or_update_customer {
     include!("../actions/create_or_update_customer/action.rs");
 }
 
+pub mod create_or_update_product {
+    include!("../actions/create_or_update_product/action.rs");
+}
+
 pub mod retrieve_customer_by_id {
     include!("../actions/retrieve_customer_by_id/action.rs");
 }

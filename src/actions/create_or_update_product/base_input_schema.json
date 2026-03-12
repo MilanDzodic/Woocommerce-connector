@@ -1,0 +1,220 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "productId": {
+      "title": "Produkt-ID",
+      "type": "integer"
+    },
+    "name": {
+      "title": "Produktnamn",
+      "type": "string"
+    },
+    "slug": {
+      "title": "URL-slug",
+      "type": "string"
+    },
+    "type": {
+      "title": "Produkttyp",
+      "type": "string"
+    },
+    "status": {
+      "title": "Status",
+      "type": "string"
+    },
+    "featured": {
+      "title": "Utvald produkt",
+      "type": "boolean"
+    },
+    "catalog_visibility": {
+      "title": "Synlighet i katalog",
+      "type": "string"
+    },
+    "description": {
+      "title": "Beskrivning",
+      "type": "string"
+    },
+    "short_description": {
+      "title": "Kort beskrivning",
+      "type": "string"
+    },
+    "sku": {
+      "title": "Artikelnummer (SKU)",
+      "type": "string"
+    },
+    "regular_price": {
+      "title": "Ordinarie pris",
+      "type": "string"
+    },
+    "sale_price": {
+      "title": "Reapris",
+      "type": "string"
+    },
+    "date_on_sale_from": {
+      "title": "Rea startdatum",
+      "type": "string",
+      "format": "date-time"
+    },
+    "date_on_sale_to": {
+      "title": "Rea slutdatum",
+      "type": "string",
+      "format": "date-time"
+    },
+    "virtual": {
+      "title": "Virtuell",
+      "type": "boolean"
+    },
+    "downloadable": {
+      "title": "Nedladdningsbar",
+      "type": "boolean"
+    },
+    "downloads": {
+      "title": "Nedladdningsbara filer",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": { "title": "Fil-ID", "type": "string" },
+          "name": { "title": "Filnamn", "type": "string" },
+          "file": { "title": "Fil-URL", "type": "string" }
+        }
+      }
+    },
+    "download_limit": {
+      "title": "Nedladdningsgräns",
+      "type": "integer"
+    },
+    "download_expiry": {
+      "title": "Giltighetstid för nedladdning",
+      "type": "integer"
+    },
+    "external_url": {
+      "title": "Extern URL",
+      "type": "string"
+    },
+    "button_text": {
+      "title": "Knapptext",
+      "type": "string"
+    },
+    "tax_status": {
+      "title": "Skattestatus",
+      "type": "string"
+    },
+    "tax_class": {
+      "title": "Skatteklass",
+      "type": "string"
+    },
+    "manage_stock": {
+      "title": "Hantera lager",
+      "type": "boolean"
+    },
+    "stock_quantity": {
+      "title": "Lagerantal",
+      "type": "integer"
+    },
+    "stock_status": {
+      "title": "Lagerstatus",
+      "type": "string"
+    },
+    "backorders": {
+      "title": "Restorder",
+      "type": "string"
+    },
+    "weight": {
+      "title": "Vikt",
+      "type": "string"
+    },
+    "dimensions": {
+      "title": "Dimensioner",
+      "type": "object",
+      "properties": {
+        "length": { "title": "Längd", "type": "string" },
+        "width": { "title": "Bredd", "type": "string" },
+        "height": { "title": "Höjd", "type": "string" }
+      }
+    },
+    "shipping_class": {
+      "title": "Fraktklass",
+      "type": "string"
+    },
+    "reviews_allowed": {
+      "title": "Tillåt recensioner",
+      "type": "boolean"
+    },
+    "upsell_ids": {
+      "title": "Mersäljsprodukter",
+      "type": "array",
+      "items": { "type": "integer" }
+    },
+    "cross_sell_ids": {
+      "title": "Korsförsäljningsprodukter",
+      "type": "array",
+      "items": { "type": "integer" }
+    },
+    "parent_id": {
+      "title": "Moderprodukt-ID",
+      "type": "integer"
+    },
+    "purchase_note": {
+      "title": "Köpanmärkning",
+      "type": "string"
+    },
+    "categories": {
+      "title": "Kategorier",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": { "id": { "title": "Kategori-ID", "type": "integer" } }
+      }
+    },
+    "tags": {
+      "title": "Taggar",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": { "id": { "title": "Tagg-ID", "type": "integer" } }
+      }
+    },
+    "images": {
+      "title": "Bilder",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": { "title": "Bild-ID", "type": "integer" },
+          "src": { "title": "Bildkälla (URL)", "type": "string" },
+          "name": { "title": "Namn", "type": "string" },
+          "alt": { "title": "Alternativ text", "type": "string" }
+        }
+      }
+    },
+    "attributes": {
+      "title": "Attribut",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": { "title": "Attribut-ID", "type": "integer" },
+          "name": { "title": "Namn", "type": "string" },
+          "option": { "title": "Alternativ", "type": "string" }
+        }
+      }
+    },
+    "default_attributes": {
+      "title": "Standardattribut",
+      "type": "array",
+      "items": { "type": "object" }
+    },
+    "menu_order": {
+      "title": "Menyordning",
+      "type": "integer"
+    },
+    "meta_data": {
+      "title": "Metadata",
+      "type": "array",
+      "items": { "type": "object" }
+    }
+  },
+  "required": [],
+  "type": "object"
+}
