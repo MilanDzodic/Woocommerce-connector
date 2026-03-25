@@ -67,13 +67,13 @@ RSpec.describe 'actions.create_or_update_customer' do
 
   it 'sends POST when ID is missing' do
     input = { 'email' => 'ny@test.se' }
-    mock_server.mock_endpoint(:post, '/customers', { 'id' => 1 }.to_json, status: 201)
+    mock_server.mock_endpoint(:post, '/customers', { 'id' => 1 }, status: 201)
     tester.execute_action('create_or_update_customer', input)
   end
 
   it 'sends PUT when ID is provided' do
     input = { 'customerId' => 123, 'email' => 'befintlig@test.se' }
-    mock_server.mock_endpoint(:put, '/customers/123', { 'id' => 123 }.to_json, status: 200)
+    mock_server.mock_endpoint(:put, '/customers/123', { 'id' => 123 }, status: 200)
     tester.execute_action('create_or_update_customer', input)
   end
 end

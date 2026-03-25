@@ -5,7 +5,7 @@
   "properties": {
     "customerId": {
       "type": "integer",
-      "title": "Kund-ID (för uppdatering)",
+      "title": "Kund-ID",
       "description": "Lämna tomt för att skapa en ny kund. Ange ID för att uppdatera en befintlig."
     },
     "email": {
