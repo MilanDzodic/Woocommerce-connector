@@ -13,6 +13,10 @@ pub mod create_or_update_product {
     include!("../actions/create_or_update_product/action.rs");
 }
 
+pub mod delete_product_by_id {
+    include!("../actions/delete_product_by_id/action.rs");
+}
+
 pub mod retrieve_customer_by_id {
     include!("../actions/retrieve_customer_by_id/action.rs");
 }

@@ -110,4 +110,35 @@ impl ApiClient {
 
     Ok((response.status, response.body))
   }
+
+  pub fn delete(&self, endpoint: &str) -> Result<Value, AppError> {
+    let url = self.build_url(endpoint);
+
+    let mut request_builder = RequestBuilder::new()
+      .method(Method::Delete)
+      .url(&url);
+
+    for (key, value) in &self.headers {
+      request_builder = request_builder.header(key, value);
+    }
+
+    let response = request_builder.send().map_err(|_err| AppError {
+      code: ErrorCode::Other,
+      message: format!("DELETE-anrop misslyckades till URL: {}", url),
+    })?;
+
+    if response.status >= 400 {
+      return Err(AppError {
+        code: ErrorCode::Other,
+        message: format!("Servern svarade med fel {}: {}", response.status, response.body),
+      });
+    }
+
+    let json_response: Value = serde_json::from_str(&response.body).map_err(|e| AppError {
+      code: ErrorCode::Other,
+      message: format!("Kunde inte tolka raderings-svaret som JSON: {}", e),
+    })?;
+
+    Ok(json_response)
+  }
 }
