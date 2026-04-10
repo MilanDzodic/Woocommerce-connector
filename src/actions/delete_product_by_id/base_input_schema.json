@@ -3,12 +3,10 @@
   "additionalProperties": false,
   "properties": {
     "force": {
-      "title": "Radera permanent",
-      "type": "boolean",
-      "default": true
+      "default": true,
+      "type": "boolean"
     },
     "productId": {
-      "title": "Produkt-ID",
       "type": "integer"
     }
   },

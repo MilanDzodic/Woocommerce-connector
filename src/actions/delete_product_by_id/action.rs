@@ -39,7 +39,7 @@ pub fn execute(context: ActionContext) -> Result<Value, AppError> {
 /// Get the input_schema for this action
 #[allow(dead_code)]
 pub fn input_schema(_context: &ActionContext) -> Result<serde_json::Value, AppError> {
-    let base_schema = include_str!("base_input_schema.json");
+    let base_schema = include_str!("../create_or_update_product/base_input_schema.json");
     let schema: serde_json::Value = serde_json::from_str(base_schema).unwrap();
 
     Ok(schema)
@@ -48,7 +48,7 @@ pub fn input_schema(_context: &ActionContext) -> Result<serde_json::Value, AppEr
 /// Get the output schema for this action
 #[allow(dead_code)]
 pub fn output_schema(_context: &ActionContext) -> Result<serde_json::Value, AppError> {
-    let base_schema = include_str!("base_output_schema.json");
+    let base_schema = include_str!("../../schemas/shared/base_output_schema.json");
     let schema: serde_json::Value = serde_json::from_str(base_schema).unwrap();
 
     Ok(schema)
