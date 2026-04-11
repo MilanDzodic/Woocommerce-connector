@@ -2,12 +2,14 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "additionalProperties": false,
   "properties": {
-    "force": {
-      "default": true,
-      "type": "boolean"
-    },
     "productId": {
+      "title": "Produkt-ID",
       "type": "integer"
+    },
+    "force": {
+      "title": "Radera permanent",
+      "type": "boolean",
+      "default": true
     }
   },
   "required": [
