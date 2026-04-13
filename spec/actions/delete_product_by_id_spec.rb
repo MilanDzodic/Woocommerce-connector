@@ -31,7 +31,7 @@ RSpec.describe 'actions.delete_product_by_id' do
   end
 
   it 'deletes a product with the correct ID and returns data from Rust' do
-    mock_server.mock_endpoint(:delete, '/products/123', {
+    mock_server.mock_endpoint(:delete, '/products/123?force=true', {
       'id' => 123,
       'name' => 'Deleted Product',
       'status' => 'trash'
@@ -45,17 +45,17 @@ RSpec.describe 'actions.delete_product_by_id' do
   end
 
   it 'accepts both string and integer as productId in the Rust logic' do
-    mock_server.mock_endpoint(:delete, '/products/456', { 'id' => 456 })
+    mock_server.mock_endpoint(:delete, '/products/456?force=true', { 'id' => 456 })
     res_str = tester.execute_action('delete_product_by_id', { 'productId' => '456' })
     expect(JSON.parse(res_str.serialized_output)['id']).to eq(456)
 
-    mock_server.mock_endpoint(:delete, '/products/789', { 'id' => 789 })
+    mock_server.mock_endpoint(:delete, '/products/789?force=true', { 'id' => 789 })
     res_int = tester.execute_action('delete_product_by_id', { 'productId' => 789 })
     expect(JSON.parse(res_int.serialized_output)['id']).to eq(789)
   end
 
   it 'raises an error when the product to be deleted is not found (404)' do
-    mock_server.mock_endpoint(:delete, '/products/999', {
+    mock_server.mock_endpoint(:delete, '/products/999?force=true', {
       'code' => 'woocommerce_rest_not_found',
       'message' => 'Invalid ID'
     }, status: 404)
