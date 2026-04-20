@@ -1,0 +1,6 @@
+{
+  "action_name": "delete_product_by_id",
+  "method": "delete",
+  "operation_id": "deleteProductById",
+  "path": "/products/{productId}"
+}

@@ -71,7 +71,7 @@ pub fn input_schema(_context: &ActionContext) -> Result<serde_json::Value, AppEr
 
 #[allow(dead_code)]
 pub fn output_schema(_context: &ActionContext) -> Result<serde_json::Value, AppError> {
-  let base_schema = include_str!("base_output_schema.json");
+  let base_schema = include_str!("../../schemas/shared/product_base_output_schema.json");
   let schema: serde_json::Value = serde_json::from_str(base_schema).unwrap();
   Ok(schema)
 }
