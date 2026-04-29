@@ -1,0 +1,141 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "after": {
+      "format": "date-time",
+      "type": "string"
+    },
+    "before": {
+      "format": "date-time",
+      "type": "string"
+    },
+    "context": {
+      "anyOf": [
+        {
+          "const": "view"
+        },
+        {
+          "const": "edit"
+        }
+      ],
+      "default": "view",
+      "type": "string"
+    },
+    "customer": {
+      "type": "integer"
+    },
+    "dates_are_gmt": {
+      "type": "boolean"
+    },
+    "dp": {
+      "default": 2,
+      "type": "integer"
+    },
+    "exclude": {
+      "items": {
+        "type": "integer"
+      },
+      "type": "array"
+    },
+    "include": {
+      "items": {
+        "type": "integer"
+      },
+      "type": "array"
+    },
+    "modified_after": {
+      "format": "date-time",
+      "type": "string"
+    },
+    "modified_before": {
+      "format": "date-time",
+      "type": "string"
+    },
+    "offset": {
+      "type": "integer"
+    },
+    "order": {
+      "anyOf": [
+        {
+          "const": "asc"
+        },
+        {
+          "const": "desc"
+        }
+      ],
+      "default": "desc",
+      "type": "string"
+    },
+    "orderby": {
+      "anyOf": [
+        {
+          "const": "date"
+        },
+        {
+          "const": "modified"
+        },
+        {
+          "const": "id"
+        },
+        {
+          "const": "include"
+        },
+        {
+          "const": "title"
+        },
+        {
+          "const": "slug"
+        }
+      ],
+      "default": "date",
+      "type": "string"
+    },
+    "page": {
+      "default": 1,
+      "type": "integer"
+    },
+    "parent": {
+      "items": {
+        "type": "integer"
+      },
+      "type": "array"
+    },
+    "parent_exclude": {
+      "items": {
+        "type": "integer"
+      },
+      "type": "array"
+    },
+    "per_page": {
+      "default": 10,
+      "type": "integer"
+    },
+    "product": {
+      "type": "integer"
+    },
+    "search": {
+      "type": "string"
+    },
+    "status": {
+      "items": {
+        "default": "any",
+        "enum": [
+          "any",
+          "pending",
+          "processing",
+          "on-hold",
+          "completed",
+          "cancelled",
+          "refunded",
+          "failed",
+          "trash"
+        ],
+        "type": "string"
+      },
+      "type": "array"
+    }
+  },
+  "required": [],
+  "type": "object"
+}

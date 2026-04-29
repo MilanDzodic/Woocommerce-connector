@@ -2,9 +2,11 @@
 
 source 'https://rubygems.org'
 
-ruby '3.4.2'
+# Ruby version
+ruby '~> 3.4.0'
 
-gem 'app_bridge', '4.1.1'
+# App Bridge Version
+gem 'app_bridge', '~> 4.1.1'
 
 # RSpec for testing
 gem 'rspec', '~> 3.12'

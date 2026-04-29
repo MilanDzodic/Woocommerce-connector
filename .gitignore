@@ -1,3 +1,40 @@
-target
-.rspec_status
+# --- Rust Core ---
+target/
+**/*.rs.bks
 src/schemas/generated/
+
+# --- Secrets ---
+.env
+.env.*
+*.secret
+
+# --- Editor/OS Junk ---
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+*.swp
+*.bak
+
+# --- Ruby/Testing (For RSpec) ---
+.rspec_status
+.bundle/
+vendor/bundle/
+coverage/
+
+# --- Build Artifacts ---
+*.wasm
+
+# --- Utility Scripts & Outputs ---
+# Ignores ALL PowerShell scripts
+*.ps1
+# Ignore context files
+woocommerce_context_actions.txt
+woocommerce_context_core.txt
+woocommerce_context_tests.txt
+woocommerce_project_context.txt
+woocommerce_api_context.txt
+# Ignore boilerplate files
+trigger_polling_boilerplate.rs
+get_paginated_action_boilerplate.rs
+standard_action_boilerplate.rs

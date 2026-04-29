@@ -77,10 +77,11 @@ GEM
 PLATFORMS
   arm64-darwin-23
   ruby
+  x64-mingw-ucrt
   x86_64-linux
 
 DEPENDENCIES
-  app_bridge (= 4.1.1)
+  app_bridge (~> 4.1.1)
   rspec (~> 3.12)
   rspec-benchmark (~> 0.6)
   rubocop (~> 1.50)

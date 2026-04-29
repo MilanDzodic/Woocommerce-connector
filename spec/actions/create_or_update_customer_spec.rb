@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 RSpec.describe 'actions.create_or_update_customer' do
@@ -38,11 +40,11 @@ RSpec.describe 'actions.create_or_update_customer' do
     }
 
     mock_server.mock_endpoint(:post, '/customers', {
-      'id' => 456,
-      'email' => 'ny_kund@example.com',
-      'first_name' => 'Test',
-      'last_name' => 'Person'
-    }, status: 201)
+                                'id' => 456,
+                                'email' => 'ny_kund@example.com',
+                                'first_name' => 'Test',
+                                'last_name' => 'Person'
+                              }, status: 201)
 
     response = tester.execute_action('create_or_update_customer', input)
     data = JSON.parse(response.serialized_output)
@@ -56,13 +58,13 @@ RSpec.describe 'actions.create_or_update_customer' do
     input = { 'email' => 'invalid-email' }
 
     mock_server.mock_endpoint(:post, '/customers', {
-      'code' => 'registration-error-invalid-email',
-      'message' => 'Please provide a valid email address.'
-    }, status: 400)
+                                'code' => 'registration-error-invalid-email',
+                                'message' => 'Please provide a valid email address.'
+                              }, status: 400)
 
-    expect {
+    expect do
       tester.execute_action('create_or_update_customer', input)
-    }.to raise_error(AppBridge::OtherError, /WooCommerce returnerade felkod 400/)
+    end.to raise_error(AppBridge::OtherError, /WooCommerce returnerade felkod 400/)
   end
 
   it 'sends POST when ID is missing' do
