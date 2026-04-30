@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 RSpec.describe 'actions.list_all_products' do
@@ -35,8 +37,8 @@ RSpec.describe 'actions.list_all_products' do
     url = "/products?page=1&per_page=100&sku=#{sku}"
 
     mock_server.mock_endpoint(:get, url, [
-      { 'id' => 555, 'sku' => 'GTX-1080-TI' }
-    ])
+                                { 'id' => 555, 'sku' => 'GTX-1080-TI' }
+                              ])
 
     response = tester.execute_action('search_products', { 'sku' => sku })
     data = JSON.parse(response.serialized_output)
@@ -52,11 +54,11 @@ RSpec.describe 'actions.list_all_products' do
       'status' => 'publish'
     }
 
-    url = "/products?page=1&per_page=100&status=publish&sku=BLUE-SHIRT"
+    url = '/products?page=1&per_page=100&status=publish&sku=BLUE-SHIRT'
 
     mock_server.mock_endpoint(:get, url, [
-      { 'id' => 1, 'sku' => 'BLUE-SHIRT' }
-    ])
+                                { 'id' => 1, 'sku' => 'BLUE-SHIRT' }
+                              ])
 
     response = tester.execute_action('search_products', params)
     data = JSON.parse(response.serialized_output)
@@ -66,7 +68,7 @@ RSpec.describe 'actions.list_all_products' do
   end
 
   it 'returns an empty items list when no product matches the SKU and strategy is continue' do
-    url = "/products?page=1&per_page=100&sku=NON-EXISTENT"
+    url = '/products?page=1&per_page=100&sku=NON-EXISTENT'
     mock_server.mock_endpoint(:get, url, [])
 
     response = tester.execute_action('search_products', { 'sku' => 'NON-EXISTENT', 'on_not_found' => 'continue' })
@@ -77,14 +79,13 @@ RSpec.describe 'actions.list_all_products' do
   end
 
   it 'paginates through multiple pages until all products are fetched' do
-
     page1_products = Array.new(100) { |i| { 'id' => i, 'name' => "Product #{i}" } }
 
     page2_products = Array.new(5) { |i| { 'id' => i + 100, 'name' => "Product #{i + 100}" } }
 
-    mock_server.mock_endpoint(:get, "/products?page=1&per_page=100&status=publish", page1_products)
+    mock_server.mock_endpoint(:get, '/products?page=1&per_page=100&status=publish', page1_products)
 
-    mock_server.mock_endpoint(:get, "/products?page=2&per_page=100&status=publish", page2_products)
+    mock_server.mock_endpoint(:get, '/products?page=2&per_page=100&status=publish', page2_products)
 
     response = tester.execute_action('search_products', { 'status' => 'publish' })
     data = JSON.parse(response.serialized_output)
@@ -95,7 +96,7 @@ RSpec.describe 'actions.list_all_products' do
   end
 
   it 'returns an empty items list when no products are found' do
-    url = "/products?page=1&per_page=100&sku=MISSING"
+    url = '/products?page=1&per_page=100&sku=MISSING'
     mock_server.mock_endpoint(:get, url, [])
 
     response = tester.execute_action('search_products', { 'sku' => 'MISSING' })

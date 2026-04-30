@@ -1,0 +1,69 @@
+name: Tests
+
+on:
+  push:
+    branches: ["**"]
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  test:
+    name: Build & Test (Connector)
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # 1. Install Rust 1.85.0 to support edition = "2024"
+      - name: Setup Rust
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          toolchain: 1.85.0
+          targets: wasm32-wasip2
+          components: rustfmt, clippy
+
+      # 2. Cache Rust-dependencies
+      - name: Cache Rust dependencies
+        uses: swatinem/rust-cache@v2
+
+      # 3. Install Ruby 3.4 (3.4.2 / 3.4.8)
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "3.4"
+          bundler-cache: true
+
+      # 4. Check code formatting
+      - name: Check Formatting
+        run: cargo fmt -- --check
+
+      # 5. Lint code with Clippy
+      - name: Lint with Clippy
+        run: cargo clippy --target wasm32-wasip2 -- -D warnings
+
+      # 6. Build Project
+      - name: Build WASM Connector
+        env:
+          RUST_BACKTRACE: 1
+          CARGO_TERM_COLOR: always
+        run: cargo build --release --target wasm32-wasip2
+
+      # 7. Start Mock Server (WireMock) directly via Docker Compose
+      - name: Start Mock Server
+        run: |
+          docker compose -f docker-compose.test.yml up -d
+          echo "Waiting for mock server to be ready..."
+          attempts=0
+          while [ $attempts -lt 30 ]; do
+            if curl -sf http://localhost:8080/__admin/health > /dev/null; then
+              echo "Mock server is ready!"
+              break
+            fi
+            sleep 1
+            attempts=$((attempts + 1))
+          done
+
+      # 8. Run tests
+      - name: Run RSpec Tests
+        run: bundle exec rspec --format documentation --color

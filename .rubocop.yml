@@ -2,8 +2,23 @@
 
 AllCops:
   NewCops: enable
-  TargetRubyVersion: 3.4.2
+  TargetRubyVersion: 3.4
   SuggestExtensions: false
 
 Metrics/BlockLength:
+  Enabled: false
+
+Metrics/MethodLength:
+  Enabled: false
+
+Naming/PredicateMethod:
+  Enabled: false
+
+Lint/SuppressedException:
+  Enabled: false
+
+Naming/VariableNumber:
+  Enabled: false
+
+Style/MultilineBlockChain:
   Enabled: false
