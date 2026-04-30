@@ -1,10 +1,7 @@
 use crate::standout::app::types::AppError;
 use serde_json::{Value, json};
 
-/// Recursively clean empty values from JSON data
-/// This removes null values, empty strings, empty arrays, and empty objects
-/// It also recursively cleans nested objects and arrays
-#[allow(dead_code)] // Used by generated actions
+#[allow(dead_code)]
 pub fn clean_empty_values(value: &Value) -> Value {
     match value {
         Value::Null => Value::Null,
@@ -46,22 +43,17 @@ pub fn clean_empty_values(value: &Value) -> Value {
     }
 }
 
-/// Build request body from input data with recursive cleaning of empty values
-/// This function removes null values, empty strings, empty arrays, and empty objects
-/// It also recursively cleans nested structures
-#[allow(dead_code)] // Used by generated actions
+#[allow(dead_code)]
 pub fn request_body_without_empty_values(
     input_data: &Value,
     path_parameters: &[&str],
 ) -> Result<Value, AppError> {
     let mut body = serde_json::Map::new();
 
-    // Copy all fields except path parameters to request body
     for (key, value) in input_data.as_object().unwrap_or(&serde_json::Map::new()) {
         if !path_parameters.contains(&key.as_str()) {
             let cleaned_value = clean_empty_values(value);
 
-            // Only include non-null values
             if !cleaned_value.is_null() {
                 body.insert(key.clone(), cleaned_value);
             }

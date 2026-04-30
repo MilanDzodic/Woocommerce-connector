@@ -1,0 +1,109 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "context": {
+      "anyOf": [
+        {
+          "const": "view"
+        },
+        {
+          "const": "edit"
+        }
+      ],
+      "default": "view",
+      "type": "string"
+    },
+    "email": {
+      "type": "string"
+    },
+    "exclude": {
+      "items": {
+        "type": "integer"
+      },
+      "type": "array"
+    },
+    "include": {
+      "items": {
+        "type": "integer"
+      },
+      "type": "array"
+    },
+    "offset": {
+      "type": "integer"
+    },
+    "order": {
+      "anyOf": [
+        {
+          "const": "asc"
+        },
+        {
+          "const": "desc"
+        }
+      ],
+      "default": "asc",
+      "type": "string"
+    },
+    "orderby": {
+      "anyOf": [
+        {
+          "const": "id"
+        },
+        {
+          "const": "include"
+        },
+        {
+          "const": "name"
+        },
+        {
+          "const": "registered_date"
+        }
+      ],
+      "default": "name",
+      "type": "string"
+    },
+    "page": {
+      "default": 1,
+      "type": "integer"
+    },
+    "per_page": {
+      "default": 10,
+      "type": "integer"
+    },
+    "role": {
+      "anyOf": [
+        {
+          "const": "all"
+        },
+        {
+          "const": "administrator"
+        },
+        {
+          "const": "editor"
+        },
+        {
+          "const": "author"
+        },
+        {
+          "const": "contributor"
+        },
+        {
+          "const": "subscriber"
+        },
+        {
+          "const": "customer"
+        },
+        {
+          "const": "shop_manager"
+        }
+      ],
+      "default": "customer",
+      "type": "string"
+    },
+    "search": {
+      "type": "string"
+    }
+  },
+  "required": [],
+  "type": "object"
+}

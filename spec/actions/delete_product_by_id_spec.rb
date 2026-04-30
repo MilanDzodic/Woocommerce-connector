@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 RSpec.describe 'actions.delete_product_by_id' do
@@ -13,9 +15,9 @@ RSpec.describe 'actions.delete_product_by_id' do
       'WooCommerce Connection',
       {
         'base_url' => 'http://localhost:8080',
-        'headers' =>  {
-          'Authorization': 'Basic abc',
-          'Accept': 'application/json',
+        'headers' => {
+          Authorization: 'Basic abc',
+          Accept: 'application/json',
           'Content-Type': 'application/json'
         }
       }.to_json
@@ -32,10 +34,10 @@ RSpec.describe 'actions.delete_product_by_id' do
 
   it 'deletes a product with the correct ID and returns data from Rust' do
     mock_server.mock_endpoint(:delete, '/products/123?force=true', {
-      'id' => 123,
-      'name' => 'Deleted Product',
-      'status' => 'trash'
-    })
+                                'id' => 123,
+                                'name' => 'Deleted Product',
+                                'status' => 'trash'
+                              })
 
     response = tester.execute_action('delete_product_by_id', { 'productId' => 123 })
     data = JSON.parse(response.serialized_output)
@@ -56,18 +58,18 @@ RSpec.describe 'actions.delete_product_by_id' do
 
   it 'raises an error when the product to be deleted is not found (404)' do
     mock_server.mock_endpoint(:delete, '/products/999?force=true', {
-      'code' => 'woocommerce_rest_not_found',
-      'message' => 'Invalid ID'
-    }, status: 404)
+                                'code' => 'woocommerce_rest_not_found',
+                                'message' => 'Invalid ID'
+                              }, status: 404)
 
-    expect {
+    expect do
       tester.execute_action('delete_product_by_id', { 'productId' => 999 })
-    }.to raise_error(AppBridge::OtherError, /404/)
+    end.to raise_error(AppBridge::OtherError, /404/)
   end
 
   it 'raises an error if productId is completely missing from the input' do
-    expect {
+    expect do
       tester.execute_action('delete_product_by_id', { 'not_an_id' => 'abc' })
-    }.to raise_error(AppBridge::MisconfiguredError, /productId parameter is required/)
+    end.to raise_error(AppBridge::MisconfiguredError, /productId parameter is required/)
   end
 end

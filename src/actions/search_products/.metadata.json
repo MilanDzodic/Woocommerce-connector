@@ -1,6 +1,6 @@
 {
-  "action_name": "list_all_products",
+  "action_name": "search_products",
   "method": "get",
-  "operation_id": "listAllProducts",
+  "operation_id": "searchProducts",
   "path": "/products"
 }

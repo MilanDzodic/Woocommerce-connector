@@ -1,0 +1,6 @@
+{
+  "action_name": "retrieve_product_by_id",
+  "method": "get",
+  "operation_id": "retrieveProductById",
+  "path": "/products/{productId}"
+}

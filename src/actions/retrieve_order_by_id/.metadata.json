@@ -1,0 +1,6 @@
+{
+  "action_name": "retrieve_order_by_id",
+  "method": "get",
+  "operation_id": "retrieveOrderById",
+  "path": "/orders/{orderId}"
+}

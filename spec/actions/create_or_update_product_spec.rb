@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 RSpec.describe 'actions.create_or_update_product' do
@@ -38,11 +40,11 @@ RSpec.describe 'actions.create_or_update_product' do
     }
 
     mock_server.mock_endpoint(:post, '/products', {
-      'id' => 101,
-      'name' => 'Premium T-shirt',
-      'type' => 'simple',
-      'price' => '299'
-    }, status: 201)
+                                'id' => 101,
+                                'name' => 'Premium T-shirt',
+                                'type' => 'simple',
+                                'price' => '299'
+                              }, status: 201)
 
     response = tester.execute_action('create_or_update_product', input)
     data = JSON.parse(response.serialized_output)
@@ -58,9 +60,9 @@ RSpec.describe 'actions.create_or_update_product' do
     }
 
     mock_server.mock_endpoint(:put, '/products/101', {
-      'id' => 101,
-      'name' => 'Updated T-shirt'
-    }, status: 200)
+                                'id' => 101,
+                                'name' => 'Updated T-shirt'
+                              }, status: 200)
 
     response = tester.execute_action('create_or_update_product', input)
     data = JSON.parse(response.serialized_output)
@@ -73,25 +75,25 @@ RSpec.describe 'actions.create_or_update_product' do
     input = { 'productId' => 999, 'name' => 'Ghost Product' }
 
     mock_server.mock_endpoint(:put, '/products/999', {
-      'code' => 'woocommerce_rest_product_invalid_id',
-      'message' => 'Invalid ID.'
-    }, status: 404)
+                                'code' => 'woocommerce_rest_product_invalid_id',
+                                'message' => 'Invalid ID.'
+                              }, status: 404)
 
-    expect {
+    expect do
       tester.execute_action('create_or_update_product', input)
-    }.to raise_error(AppBridge::OtherError, /404/)
+    end.to raise_error(AppBridge::OtherError, /404/)
   end
 
   it 'raises an error when WooCommerce returns a 400 Bad Request' do
     input = { 'name' => '' }
 
     mock_server.mock_endpoint(:post, '/products', {
-      'code' => 'rest_invalid_param',
-      'message' => 'Invalid parameter(s): name'
-    }, status: 400)
+                                'code' => 'rest_invalid_param',
+                                'message' => 'Invalid parameter(s): name'
+                              }, status: 400)
 
-    expect {
+    expect do
       tester.execute_action('create_or_update_product', input)
-    }.to raise_error(AppBridge::OtherError, /400/)
+    end.to raise_error(AppBridge::OtherError, /400/)
   end
 end
