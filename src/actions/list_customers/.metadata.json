@@ -1,0 +1,6 @@
+{
+  "action_name": "list_customers",
+  "method": "get",
+  "operation_id": "listAllCustomers",
+  "path": "/customers"
+}

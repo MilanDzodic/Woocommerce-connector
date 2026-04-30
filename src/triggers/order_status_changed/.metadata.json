@@ -1,0 +1,6 @@
+{
+  "method": "get",
+  "operation_id": "listAllOrders",
+  "path": "/orders",
+  "trigger_name": "order_status_changed"
+}
